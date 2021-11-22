@@ -1,6 +1,6 @@
 <?php
 return [
-    'title' => 'CIT CORE',
+    'title' => 'SPX Express',
     'dashboard' => 'Dashboard',
     'admin' => 'Admin',
     'version'=>'ເວີຊັ່ນ',

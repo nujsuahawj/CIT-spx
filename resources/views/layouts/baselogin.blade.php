@@ -1,45 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <title>{{__('lang.login')}}|{{__('lang.title')}}</title>
   <link rel="icon" type="image/png" href="{{asset('images/logo.png')}}"/>
-
-  <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="{{asset('admin/plugins/fontawesome-free/css/all.min.css')}}">
-  <!-- icheck bootstrap -->
-  <link rel="stylesheet" href="{{asset('admin/plugins/icheck-bootstrap/icheck-bootstrap.min.css')}}">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="{{asset('admin/dist/css/adminlte.min.css')}}">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{asset('admin/login/vendor/bootstrap/css/bootstrap.min.css')}}">
+  <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{asset('admin/login/fonts/font-awesome-4.7.0/css/font-awesome.min.css')}}">
+  <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{asset('admin/login/fonts/Linearicons-Free-v1.0.0/icon-font.min.css')}}">
+  <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{asset('admin/login/vendor/animate/animate.css')}}">
+  <!--===============================================================================================-->	
+    <link rel="stylesheet" type="text/css" href="{{asset('admin/login/vendor/css-hamburgers/hamburgers.min.css')}}">
+  <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{asset('admin/login/vendor/select2/select2.min.css')}}">
+  <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{asset('admin/login/css/util.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('admin/login/css/main.css')}}">
+  <!--===============================================================================================-->
 
   <style>
     @font-face{
       font-family: Phetsarath OT;
-      src: url('{{asset('fonts/PhetsarathຫOT.ttf')}}');
+      src: url('{{asset('fonts/PhetsarathOT.ttf')}}');
     }
   </style>
 
   @livewireStyles
 
 </head>
-<body class="hold-transition login-page" style="font-family: 'Phetsarath OT'">
+<body style="font-family: 'Phetsarath OT'">
 
     {{$slot}}
 
 <!-- /.login-box -->
 
-<!-- jQuery -->
-<script src="{{asset('admin/plugins/jquery/jquery.min.js')}}"></script>
-<!-- Bootstrap 4 -->
-<script src="{{asset('admin/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-<!-- AdminLTE App -->
-<script src="{{asset('admin/dist/js/adminlte.min.js')}}"></script>
-
-
-
+<!--===============================================================================================-->	
+<script src="{{asset('admin/login/vendor/jquery/jquery-3.2.1.min.js')}}"></script>
+<!--===============================================================================================-->
+	<script src="{{asset('admin/login/vendor/bootstrap/js/popper.js')}}"></script>
+	<script src="{{asset('admin/login/vendor/bootstrap/js/bootstrap.min.js')}}"></script>
+<!--===============================================================================================-->
+	<script src="{{asset('admin/login/vendor/select2/select2.min.js')}}"></script>
+<!--===============================================================================================-->
+	<script src="{{asset('admin/login/js/main.js')}}"></script>
 
 @livewireScripts
 

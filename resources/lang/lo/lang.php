@@ -1,6 +1,6 @@
 <?php
 return [
-    'title' => 'SLS CORE',
+    'title' => 'SPX Express',
     'dashboard' => 'Dashboard',
     'admin' => 'Admin',
     'version'=>'ເວີຊັ່ນ',

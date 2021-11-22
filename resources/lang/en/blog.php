@@ -11,7 +11,7 @@
     */
 
     return [
-        'title_website'=>'SLS Express',
+        'title_website'=>'SPX Express',
         'dashboardblog'=>'Dashboard Website',
         'post'=>'Post',
         'postcategory'=>'Post category',

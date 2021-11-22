@@ -11,7 +11,7 @@
     */
 
     return [
-        'title_website'=>'ແສງລວຍຊັບ ຂົນສົ່ງດ່ວນ',
+        'title_website'=>'ບໍລິສັດ ສຸກພະໄຊ ຂົນສົົ່ງດ່ວນ',
         'dashboardblog'=>'Dashboard Website',
         'post'=>'ບົດຄວາມ',
         'postcategory'=>'ໝວດໝູ່ບົດຄວາມ',
