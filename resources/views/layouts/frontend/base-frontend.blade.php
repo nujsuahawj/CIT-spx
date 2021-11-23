@@ -9,28 +9,21 @@
     <meta content="{{__('blog.title_website')}}" name="description">
 
     <!-- Favicon -->
-    <link href="{{asset('images/logo.png')}}" rel="icon">
+    <link href="img/favicon.ico" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">  
 
-    <!-- Icon Font Stylesheet -->
+    <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="{{asset('frontend/lib/flaticon/font/flaticon.css')}}" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
-    <link href="{{asset('frontend/lib/owlcarousel/assets/owl.carousel.min.css')}}" rel="stylesheet">
-    <link href="{{asset('frontend/lib/animate/animate.min.css')}}" rel="stylesheet">
+    <link href="{{asset('fontend/lib/animate/animate.min.css')}}" rel="stylesheet">
+    <link href="{{asset('fontend/lib/owlcarousel/assets/owl.carousel.min.css')}}" rel="stylesheet">
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="{{asset('frontend/css/bootstrap.min.css')}}" rel="stylesheet">
-
-    <!-- Template Stylesheet -->
-    <link href="{{asset('frontend/css/style.css')}}" rel="stylesheet">
-    <!-- Toastr -->
-    <link rel="stylesheet" href="{{asset('admin/plugins/toastr/toastr.min.css')}}">
+    <link href="{{asset('fontend/css/style.css')}}" rel="stylesheet">
 
     <style>
         @font-face{
@@ -44,139 +37,164 @@
 </head>
 
 <body style="font-family: 'BoonHome'">
-    <!-- Navbar Start -->
-    <nav class="navbar navbar-expand-lg bg-white navbar-light shadow-sm py-2 py-lg-0 px-1 px-lg-0">
-        <a href="/" class="navbar-brand ms-lg-1">
-            <img src="{{asset('images/logo.png')}}" height="80">
-        </a>
-        <a href="/" class="navbar-brand ms-lg-0">
-            <h3 class="display-4 m-0 text-warning">SLS<span class="text-secondary">Express</span></h3>
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <div class="navbar-nav ms-auto py-0">
-                <!--<a href="/" class="nav-item nav-link">{{__('blog.home')}}</a>-->
-                <a href="{{route('about')}}" class="nav-item nav-link">{{__('blog.about')}}</a>
-                <a href="{{route('calculator')}}" class="nav-item nav-link">{{__('blog.price_calculator')}}</a>
-                <a href="{{route('term_condition')}}" class="nav-item nav-link">{{__('blog.terms_and_conditions')}}</a>
-                <a href="{{route('contact')}}" class="nav-item nav-link">{{__('blog.contact')}}</a>
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">{{__('lang.language')}}</a>
-                    <div class="dropdown-menu m-0">
-                        <a href="{{url('localization/lo')}}" class="dropdown-item">{{__('lang.lao')}}</a>
-                        <a href="{{url('localization/en')}}" class="dropdown-item">{{__('lang.eng')}}</a>
-                    </div>
-                </div>
-                <a href="" class="nav-item nav-link nav-contact bg-warning text-white px-3 ms-lg-3">
-                    <div class="text-center">
-                        <label class="text-dark text-sm">{{__('blog.hotline')}}</label>
-                        <i class="bi bi-telephone-outbound me-2"></i>{{$address->phone}}
-                    </div>
+
+      <!-- Topbar Start -->
+      <div class="container-fluid">
+        
+        <div class="row align-items-center bg-light py-3 px-xl-5 d-none d-lg-flex">
+            <div class="col-lg-4">
+                <a href="" class="text-decoration-none">
+                    <span class="h1 text-uppercase text-primary bg-dark px-2">SPX</span>
+                    <span class="h1 text-uppercase text-dark bg-primary px-2 ml-n1">Express</span>
                 </a>
             </div>
+            <div class="col-lg-4 col-6 text-left">
+               
+            </div>
+            <div class="col-lg-4 col-6 text-right">
+                <p class="m-0">{{__('blog.title_website')}}</p>
+                <h5 class="m-0">+012 345 6789</h5>
+            </div>
         </div>
-    </nav>
+    </div>
+    <!-- Topbar End -->
+
+    
+    <!-- Navbar Start -->
+    <div class="container-fluid bg-dark mb-30">
+        <div class="row px-xl-5">
+            <div class="col-lg-12">
+                <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-3 py-lg-0 px-0">
+                    <a href="" class="text-decoration-none d-block d-lg-none">
+                        <span class="h1 text-uppercase text-dark bg-light px-2">SPX</span>
+                        <span class="h1 text-uppercase text-light bg-primary px-2 ml-n1">Express</span>
+                    </a>
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                        <div class="navbar-nav mr-auto py-0">
+                            <a href="index.html" class="nav-item nav-link">{{__('blog.home')}}</a>
+                            <a href="shop.html" class="nav-item nav-link">{{__('blog.about')}}</a>
+                            <a href="detail.html" class="nav-item nav-link">{{__('blog.price_calculator')}}</a>
+                            <a href="detail.html" class="nav-item nav-link">{{__('blog.terms_and_conditions')}}</a>
+                            <a href="contact.html" class="nav-item nav-link">{{__('blog.contact')}}</a>
+                            <div class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">{{__('lang.language')}} <i class="fa fa-angle-down mt-1"></i></a>
+                                <div class="dropdown-menu bg-primary rounded-0 border-0 m-0">
+                                    <a href="{{url('localization/lo')}}" class="dropdown-item">{{__('lang.lao')}}</a>
+                                    <a href="{{url('localization/en')}}" class="dropdown-item">{{__('lang.eng')}}</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
+                            <a href="" class="btn px-0">
+                                <i class="fas fa-heart text-primary"></i>
+                                <span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;">0</span>
+                            </a>
+                            <a href="" class="btn px-0 ml-3">
+                                <i class="fas fa-shopping-cart text-primary"></i>
+                                <span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;">0</span>
+                            </a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
     <!-- Navbar End -->
 
     {{ $slot }}
 
+    
     <!-- Footer Start -->
-    <div class="container-fluid bg-warning text-light mt-5 py-5 wow fadeInUp" data-wow-delay="0.1s">
-        <div class="container pt-5">
-            <div class="row g-5">
-                <div class="col-lg-3 col-md-6">
-                    <h3 class="text-dark mb-4">{{__('blog.menu')}}</h3>
-                    <div class="d-flex flex-column justify-content-start">
-                        <a class="text-dark mb-2" href="/"><i class="bi bi-arrow-right text-primary me-2"></i>{{__('blog.home')}}</a>
-                        <a class="text-dark mb-2" href="{{route('about')}}"><i class="bi bi-arrow-right text-primary me-2"></i>{{__('blog.about')}}</a>
-                        <a class="text-dark mb-2" href="{{route('calculator')}}"><i class="bi bi-arrow-right text-primary me-2"></i>{{__('blog.price_calculator')}}</a>
-                        <a class="text-dark mb-2" href="{{route('term_condition')}}"><i class="bi bi-arrow-right text-primary me-2"></i>{{__('blog.terms_and_conditions')}}</a>
-                        <a class="text-dark mb-2" href="{{route('contact')}}"><i class="bi bi-arrow-right text-primary me-2"></i>{{__('blog.contact')}}</a>
+    <div class="container-fluid bg-dark text-secondary mt-5 pt-5">
+        <!-- <div class="row px-xl-5 pt-5">
+            <div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
+                <h5 class="text-secondary text-uppercase mb-4">Get In Touch</h5>
+                <p class="mb-4">No dolore ipsum accusam no lorem. Invidunt sed clita kasd clita et et dolor sed dolor. Rebum tempor no vero est magna amet no</p>
+                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street, New York, USA</p>
+                <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>info@example.com</p>
+                <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+012 345 67890</p>
+            </div>
+            <div class="col-lg-8 col-md-12">
+                <div class="row">
+                    <div class="col-md-4 mb-5">
+                        <h5 class="text-secondary text-uppercase mb-4">Quick Shop</h5>
+                        <div class="d-flex flex-column justify-content-start">
+                            <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Home</a>
+                            <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Our Shop</a>
+                            <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Shop Detail</a>
+                            <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Shopping Cart</a>
+                            <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Checkout</a>
+                            <a class="text-secondary" href="#"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <h3 class="text-black mb-4">{{__('lang.address')}}</h3>
-                    <p class="mb-2"><i class="bi bi-geo-alt text-primary me-2"></i>
-                        @if (Config::get('app.locale') == 'lo')
-                            {{$address->company_name_la}}
-                        @elseif (Config::get('app.locale') == 'en')
-                            {{$address->company_name_en}}
-                        @endif
-                    </p>
-                    <p class="mb-2"><i class="bi bi-telephone text-primary me-2"></i>
-                        {{$address->phone}}
-                    </p>
-                    <p class="mb-0"><i class="bi bi-envelope-open text-primary me-2"></i>
-                        {{$address->director}}
-                    </p>
-                </div>
-                <div class="col-lg-6 col-md-6">
-                    <h3 class="text-black mb-4">{{__('blog.download_app')}}</h3>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="row g-3 text-center">
-                                <div class="col-lg-4 wow slideInUp" data-wow-delay="0.3s">
-                                    <a href="" target="_blank"><img src="{{asset('images/appgle-app-store.png')}}" height="50"></a>
-                                </div>
-                                <div class="col-lg-4 wow slideInUp" data-wow-delay="0.6s">
-                                    <a href="" target="_blank"><img src="{{asset('images/google-play-store.png')}}" height="50"></a>
-                                </div>
-                                <div class="col-lg-4 wow slideInUp" data-wow-delay="0.9s">
-                                    <a href="" target="_blank"><img src="{{asset('images/huawei-app-gallery.png')}}" height="50"></a>
+                    <div class="col-md-4 mb-5">
+                        <h5 class="text-secondary text-uppercase mb-4">My Account</h5>
+                        <div class="d-flex flex-column justify-content-start">
+                            <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Home</a>
+                            <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Our Shop</a>
+                            <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Shop Detail</a>
+                            <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Shopping Cart</a>
+                            <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Checkout</a>
+                            <a class="text-secondary" href="#"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-5">
+                        <h5 class="text-secondary text-uppercase mb-4">Newsletter</h5>
+                        <p>Duo stet tempor ipsum sit amet magna ipsum tempor est</p>
+                        <form action="">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Your Email Address">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary">Sign Up</button>
                                 </div>
                             </div>
+                        </form>
+                        <h6 class="text-secondary text-uppercase mt-4 mb-3">Follow Us</h6>
+                        <div class="d-flex">
+                            <a class="btn btn-primary btn-square mr-2" href="#"><i class="fab fa-twitter"></i></a>
+                            <a class="btn btn-primary btn-square mr-2" href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-primary btn-square mr-2" href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a class="btn btn-primary btn-square" href="#"><i class="fab fa-instagram"></i></a>
                         </div>
                     </div>
-                    
                 </div>
-                <!--
-                <div class="col-12">
-                    <form class="mx-auto" style="max-width: 600px;">
-                        <div class="input-group">
-                            <input type="text" class="form-control border-white p-3" placeholder="Your Email">
-                            <button class="btn btn-primary px-4">Sign Up</button>
-                        </div>
-                    </form>
-                </div>
-            -->
             </div>
-        </div>
-    </div>
-    <div class="container-fluid bg-danger text-light py-4">
-        <div class="container">
-            <div class="row g-5">
-                <div class="col-md-6 text-center text-md-start">
-                    <p class="mb-md-0">&copy; <a class="text-white border-bottom" href="https://slsexpresslaos.com/" target="_blank">{{__('blog.title_website')}}</a>. All Rights Reserved.</p>
-                </div>
-                <div class="col-md-6 text-center text-md-end">
-                    <a class="btn btn-lg btn-primary btn-lg-square rounded me-2" href="{{$address->whatsapp}}" target="_blank"><i class="fab fa-whatsapp fw-normal"></i></a>
-                    <a class="btn btn-lg btn-primary btn-lg-square rounded me-2" href="{{$address->facebook_fanpage}}" target="_blank"><i class="fab fa-facebook-f fw-normal"></i></a>
-                    <a class="btn btn-lg btn-primary btn-lg-square rounded me-2" href="{{$address->youtube}}" target="_blank"><i class="fab fa-youtube fw-normal"></i></a>
-                </div>
+        </div> -->
+        <div class="row border-top mx-xl-5 py-4" style="border-color: rgba(256, 256, 256, .1) !important;">
+            <div class="col-md-6 px-xl-0">
+                <p class="mb-md-0 text-center text-md-left text-secondary">
+                    &copy; <a class="text-primary" href="#">{{__('blog.title_website')}}</a>. All Rights Reserved. Designed
+                    by
+                    <a class="text-primary" href="https://citgroup.la/">ບໍລິສັດ ຊີໄອທີ ຈຳກັດຜູ້ດຽວ.</a>
+                </p>
+            </div>
+            <div class="col-md-6 px-xl-0 text-center text-md-right">
+                <img class="img-fluid" src="img/payments.png" alt="">
             </div>
         </div>
     </div>
     <!-- Footer End -->
 
-
     <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-secondary btn-lg-square rounded back-to-top"><i class="bi bi-arrow-up"></i></a>
+    <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
 
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{{asset('frontend/lib/wow/wow.min.js')}}"></script>
-    <script src="{{asset('frontend/lib/easing/easing.min.js')}}"></script>
-    <script src="{{asset('frontend/lib/waypoints/waypoints.min.js')}}"></script>
-    <script src="{{asset('frontend/lib/owlcarousel/owl.carousel.min.js')}}"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="{{asset('fontend/lib/easing/easing.min.js')}}"></script>
+    <script src="{{asset('fontend/lib/owlcarousel/owl.carousel.min.js')}}"></script>
+
+    <!-- Contact Javascript File -->
+    <script src="{{asset('fontend/mail/jqBootstrapValidation.min.js')}}"></script>
+    <script src="{{asset('fontend/mail/contact.js')}}"></script>
 
     <!-- Template Javascript -->
-    <script src="{{asset('frontend/js/main.js')}}"></script>
-    <!-- Toastr -->
-    <script src="{{asset('admin/plugins/toastr/toastr.min.js')}}"></script>
+    <script src="{{asset('fontend/js/main.js')}}"></script>
+
 
     @livewireScripts
 

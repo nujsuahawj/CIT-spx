@@ -26,7 +26,7 @@ Route::get('localization/{local}' , function($local){
 });
 
 //Frontend
-Route::get('/', LoginComponent::class)->name('home');
+Route::get('/', App\Http\Livewire\Frontend\HomeComponent::class)->name('home');
 Route::get('/about', App\Http\Livewire\Frontend\AboutComponent::class)->name('about');
 Route::get('/contact', App\Http\Livewire\Frontend\ContactComponent::class)->name('contact');
 Route::get('/calculator', App\Http\Livewire\Frontend\CalculatorComponent::class)->name('calculator');

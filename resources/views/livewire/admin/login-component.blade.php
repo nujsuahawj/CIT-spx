@@ -89,7 +89,7 @@
       <div class="limiter">
         <div class="container-login100" style="background-image: url('{{asset('images/logo.png')}}');">
           <div class="wrap-login100 p-t-50 p-b-30">
-            <form class="login100-form validate-form">
+            <!-- <form class="login100-form validate-form"> -->
               <div class="login100-form-avatar">
                 <img src="{{asset('images/logo.png')}}" alt="AVATAR">
               </div>
@@ -140,7 +140,7 @@
                 </a>
               </div>
               -->
-            </form>
+            <!-- </form> -->
           </div>
         </div>
       </div>
