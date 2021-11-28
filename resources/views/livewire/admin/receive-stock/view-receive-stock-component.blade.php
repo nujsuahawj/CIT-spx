@@ -57,6 +57,7 @@
                   </div>
                 </div>
                 <div class="card-body">
+                  @if(!empty($code))
                   @if(!empty($traffic_id))
                   <div class="table-responsive">
                     <table class="table table-bordered table-striped">
@@ -107,6 +108,7 @@
                         </tbody>
                     </table>
                   </div>
+                  @endif
                   @endif
                 </div>
               </div>

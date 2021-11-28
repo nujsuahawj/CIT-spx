@@ -66,7 +66,7 @@
                       <button wire:click="save()" type="button" class="btn btn-primary"> <i class="fas fa-save"></i> {{__('lang.save')}}</button>  
                     </div>
                     <div class="col-md-6" align="center">
-                      <a href="{{route('admin.shipout')}}"  type="button" class="btn btn-warning" ><i class="fas fa-arrow-alt-circle-left"></i> {{__('lang.back')}}</a>
+                      <a href="{{route('admin.shipout_stock')}}"  type="button" class="btn btn-warning" ><i class="fas fa-arrow-alt-circle-left"></i> {{__('lang.back')}}</a>
                     </div>
                   </div>
                 </div>
@@ -171,9 +171,7 @@
                       </tr>
                       </thead>
                       <tbody>
-                      @php
-                        $stt = 1;    
-                      @endphp
+                      @php $stt = 1; @endphp
   
                       @foreach ($receivetransaction as $item)
                       <tr>
@@ -203,6 +201,7 @@
           </div>
           <div class="modal-footer justify-content-between">
             <button type="button" class="btn btn-danger" data-dismiss="modal">{{__('lang.close')}}</button>
+            <!-- <button wire:click="addall()" type="button" class="btn btn-success float-right" data-dismiss="modal">>>> {{__('lang.select_all')}}</button> -->
           </div>
         </div>
       </div>
@@ -231,7 +230,6 @@
                           <th>{{__('lang.height')}}</th>
                           <th>{{__('lang.longs')}}</th>
                           <th>{{__('lang.weigh')}}</th>
-                          <th>{{__('lang.calculator_type')}}</th>
                           <th>{{__('lang.amount')}}</th>
                           <th>{{__('lang.paid_type')}}</th>
                           <th>{{__('lang.cod_service_amount')}}</th>
@@ -251,7 +249,6 @@
                         <td>{{$item->height}}</td>
                         <td>{{$item->longs}}</td>
                         <td>{{$item->weigh}}</td>
-                        <td>{{$item->calname}}</td>
                         <td>{{number_format($item->amount)}}</td>
                         <td>@if($item->paid_type=='SD') {{__('lang.by_sender')}}@else {{__('lang.by_receiver')}}@endif</td>
                         <td>{{number_format($item->cod_amount)}}</td>
@@ -263,6 +260,7 @@
           </div>
           <div class="modal-footer justify-content-between">
             <button type="button" class="btn btn-danger" data-dismiss="modal">{{__('lang.close')}}</button>
+            
           </div>
         </div>
       </div>

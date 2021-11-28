@@ -24,7 +24,7 @@ class ViewReceiveStockComponent extends Component
             if(!empty($traffic)){
                 $this->traffic_id = $traffic->id;
                 $shipout = Logistic::orderBy('id','desc')->where('branch_id', '!=', auth()->user()->branchname->id)
-                ->where('trf_code',$traffic->id)->get();
+                ->where('trf_code',$traffic->id)->where('status','S')->get();
             }else{
                 $this->emit('alert', ['type' => 'error', 'message' => 'ຂໍ້ມູນນີ້ບໍ່ມີໃນລະບົບ!']);
             }
@@ -38,27 +38,25 @@ class ViewReceiveStockComponent extends Component
     public function accept($ids)
     {
         $shipout = LogisticDetail::where('lgt_id',$ids)->get();
+        // dd($shipout);
+        $ship = Logistic::find($ids);
+        $ship->status = 'ST';
+        $ship->save();
 
-        foreach ($shipout as $key => $item) {
-            $out = Logistic::find($item->lgt_id);
-            $out->status = 'F';
-            $out->save();
-
-            $traffic = CreateTraffic::find($out->trf_code);
-            $traffic->stop_date = date('Y-m-d h:i:s');
-            $traffic->status = 'F';
-            $traffic->save();
+        foreach ($shipout as $item) {
 
             $shipDetail = DB::table('logistic_details')->where('id', $item->id)->update(array('status' => 'ST','user_receive'=>auth()->user()->id,'receive_date'=>date('Y-m-d h:i:s')));
 
             $shipDetailList = DB::table('logistic_detail_lists')->where('detail_id',  $item->id)->update(array('status' => 'ST'));
 
             $details = LogisticDetail::select('id','lgt_id','rvcode','status')->where('id',  $item->id)->where('status', 'ST')->get();
-                foreach ($details as $key => $value) {
+
+                foreach ($details as $value) {
 
                     $receive = DB::table('receive_transactions')->where('code', $value->rvcode)->update(array('status' => 'ST'));
 
-                    $matter = DB::table('matterails')->where('receive_id', $value->rvcode)->update(array('status' => 'ST'));
+                    $matter = DB::table('matterails')->where('receive_id', $value->rvcode)->update(array('branch_receive'=>auth()->user()->branchname->id,'usr_receive'=>auth()->user()->id,'status' => 'ST'));
+                       
                 }
         }
         $this->emit('alert', ['type' => 'success', 'message' => 'ຍອມຮັບສຳເລັດ!']);

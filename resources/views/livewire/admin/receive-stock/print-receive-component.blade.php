@@ -48,7 +48,7 @@
                           {{ $logistic->sendto->company_name_en }}
                         @endif
                       <br>
-                      {{__('lang.plate_number')}}: {{$logistic->logisname->trafficname->vihiclename->plate_number}}<br>
+                      {{__('lang.name')}} {{__('lang.and')}} {{__('lang.plate')}}: {{$logistic->logisname->trafficname->vihiclename->plate_number}}<br>
                     </address>
                   </div>
                 </div>

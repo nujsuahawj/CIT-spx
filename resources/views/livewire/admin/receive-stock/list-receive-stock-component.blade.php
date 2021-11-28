@@ -53,7 +53,7 @@
                         @foreach($shipout as $item)
                             <tr>
                                <td>{{$stt++}}</td> 
-                               <td>{{$item->trf_code}}</td> 
+                               <td>{{$item->trafficname->trf_code}}</td> 
                                <td>{{$item->rvcode}}</td> 
                                <td>
                                     @if ( Config::get('app.locale') == 'lo')

@@ -26,7 +26,7 @@ class ListReceiveStockComponent extends Component
             ->where(function($query){
                 $query->where('logistics.code', 'like', '%' .$this->search. '%')
                 ->Orwhere('logistics.trf_code', 'like', '%' .$this->search. '%');
-            })->where('user_receive', auth()->user()->id)->get();
+            })->where('logistic_details.user_receive', auth()->user()->id)->where('logistics.status', 'ST')->get();
 
         return view('livewire.admin.receive-stock.list-receive-stock-component',compact('shipout'))->layout('layouts.base');
     }
