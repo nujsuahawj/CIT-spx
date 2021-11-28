@@ -49,11 +49,23 @@ class SettingApiController extends Controller
             'data'=> Village::select('id','name','pro_id','dis_id')->where('del',1)->get()
         ],200);
     }
+    public function getVillageById($id)
+    {
+        return response([
+            'data'=> Village::find($id)
+        ],200);
+    }
     //ເມືອງ
     public function getDistrict()
     {
         return response([
             'data'=> District::select('id','name','pro_id')->where('del',1)->get()
+        ],200);
+    }
+    public function getDistrictById($id)
+    {
+        return response([
+            'data'=> District::find($id)
         ],200);
     }
     //ແຂວງ
@@ -63,6 +75,13 @@ class SettingApiController extends Controller
             'data'=> Province::select('id','name')->where('del',1)->get()
         ],200);
     }
+    public function getProvinceById($id)
+    {
+        return response([
+            'data'=> Province::find($id)
+        ],200);
+    }
+
     //ເງື່ອນໄຂເງິນປັນຜົນ
     public function getDividend()
     {
