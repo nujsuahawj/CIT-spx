@@ -29,8 +29,11 @@ Route::put('/apibranchbyid/{id}', [App\Http\Controllers\Api\AboutApiController::
 Route::get('/settings/calculator_price_kgs', [App\Http\Controllers\Api\Admin\Settings\SettingApiController::class, 'getCalculatorPriceKgs']);
 Route::get('/settings/calculator_price_others', [App\Http\Controllers\Api\Admin\Settings\SettingApiController::class, 'getCalculatorPriceOthers']);
 Route::get('/settings/village', [App\Http\Controllers\Api\Admin\Settings\SettingApiController::class, 'getVillage']);
+Route::get('/settings/{id}/village', [App\Http\Controllers\Api\Admin\Settings\SettingApiController::class, 'getVillageById']);
 Route::get('/settings/district', [App\Http\Controllers\Api\Admin\Settings\SettingApiController::class, 'getDistrict']);
+Route::get('/settings/{id}/district', [App\Http\Controllers\Api\Admin\Settings\SettingApiController::class, 'getDistrictById']);
 Route::get('/settings/province', [App\Http\Controllers\Api\Admin\Settings\SettingApiController::class, 'getProvince']);
+Route::get('/settings/{id}/province', [App\Http\Controllers\Api\Admin\Settings\SettingApiController::class, 'getProvinceById']);
 Route::get('/apireceive/searchorder/{name}', [App\Http\Controllers\Api\ReceiveApiController::class, 'search']);
 
 
@@ -44,6 +47,7 @@ Route::group(['middleware' => ['auth:sanctum']], function (){
     Route::post('/apireceive/order', [App\Http\Controllers\Api\ReceiveApiController::class, 'addOrder']);
     Route::delete('/apireceives/{id}/deleteorder', [App\Http\Controllers\Api\ReceiveApiController::class, 'destroyorder']);
     Route::get('/apireceive/detail', [App\Http\Controllers\Api\DetailReceiveApiController::class,'index']);
+    Route::get('/apireceive/bill/{code}', [App\Http\Controllers\Api\ReceiveApiController::class, 'showbillreceive']);
 
     
     

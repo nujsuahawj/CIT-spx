@@ -6,6 +6,7 @@ use App\Models\Transaction\ReceiveTransaction;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\ReceiveResource;
 use App\Http\Resources\SearchReceiveResource;
+use App\Http\Resources\BillReceiveResource;
 use App\Models\Receive;
 use App\Models\Condition\Customer;
 use App\Models\Settings\CustomerType;
@@ -31,21 +32,19 @@ class ReceiveApiController extends Controller
     
     public $search_cus;
     public function indexbill(){
-
         return response()->json([ReceiveResource::collection(ReceiveTransaction::select('receive_transactions.*','cusen.name','cusen.phone','cusen.pro_id','cusen.dis_id','cusen.vil_id','matterails.goods_id','matterails.product_type_id','matterails.large','matterails.height','matterails.longs','matterails.weigh','matterails.status as ms')
                                 ->join('customers as cusen','receive_transactions.customer_receive','=','cusen.id')
                                 ->join('matterails','receive_transactions.code','=','matterails.receive_id')
-                                ->where('creator_id', auth()->user()->id)->paginate(8))],200);
-                                    
+                                ->where('creator_id', auth()->user()->id)->get())],200);
     }
 
     public function search($name){
         return response()->json([SearchReceiveResource::collection(ReceiveTransaction::select('receive_transactions.*','cr.name as crr','cr.phone as crphone') 
         ->join('customers as cr','receive_transactions.customer_receive','=','cr.id')
-            ->where('receive_transactions.code', 'like', '%' .$name. '%')
-            ->orWhere('cr.name', 'like', '%' .$name. '%')
-            ->orWhere('cr.phone', 'like', '%' .$name. '%')
-            ->paginate(8))],200);
+            ->where('receive_transactions.code', $name)
+            ->orWhere('cr.name', $name)
+            ->orWhere('cr.phone', $name)
+            ->get())],200);
     }
 
     public function addOrder (Request $request){
@@ -121,6 +120,13 @@ class ReceiveApiController extends Controller
     //         return response()->json(['message'=>'ບໍ່ມີບັນທຶກ'],404);
     //     }
     // }
+
+    public function showbillreceive($code)
+    {
+        return response()->json([BillReceiveResource::collection(
+            Matterail::where('receive_id', $code)->get()
+            )],200);
+    }
 
     public function destroyorder ($id){
         $matterail = Matterail::find($id);
