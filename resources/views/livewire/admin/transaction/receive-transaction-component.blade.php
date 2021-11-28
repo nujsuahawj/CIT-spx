@@ -87,6 +87,8 @@
                                     <div class="btn btn-warning btn-xs"> {{__('lang.normal')}} </div>
                                   @elseif($item->status == 'S')
                                     <div class="btn btn-success btn-xs"> {{__('lang.sending')}} </div>
+                                  @elseif($item->status == 'ST')
+                                    <div class="btn btn-info btn-xs"> {{__('lang.warehouse')}} </div>
                                   @elseif($item->status == 'RJ')
                                     <div class="btn btn-danger btn-xs"> {{__('lang.reject')}} </div>
                                   @elseif($item->status == 'F')
@@ -101,9 +103,13 @@
                                   <button type="button" class="btn btn-info btn-sm dropdown-toggle dropdown-icon" data-toggle="dropdown">
                                   </button>
                                   <div class="dropdown-menu" role="menu">
-                                  <a class="dropdown-item" href="javascript:void(0)" wire:click="DetailReceive({{$item->id}})"><i class="fas fa-info-circle text-info"> {{__('lang.detail')}}</i></a>
-                                  @if(Auth()->user()->rolename->name == 'admin' && $item->status == 'N')
-                                    <a class="dropdown-item" href="javascript:void(0)" wire:click="showDestroy({{$item->id}})"><i class="fas fa fa-times-circle text-danger"> {{__('lang.reject')}}</i></a>
+                                  <a class="dropdown-item" href="javascript:void(0)" wire:click="DetailReceive({{$item->id}})"><i class="fas fa-info-circle text-info"></i> {{__('lang.detail')}}</a>
+                                  @if($item->status == 'N')
+                                    <a class="dropdown-item" href="javascript:void(0)" wire:click="showDestroy({{$item->id}})"><i class="fas fa fa-times-circle text-danger"></i> {{__('lang.reject')}}</a>
+                                  @endif
+                                  @if($item->status == 'N')
+                                  <a class="dropdown-item" href="{{route('voucher.printreceive',$item->code)}}"><i class="fas fa-print text-success"></i> {{__('lang.printreceive')}}</a>
+                                  <a class="dropdown-item" href="{{route('voucher.printmatterail',$item->code)}}"><i class="fas fa-print text-success"></i> {{__('lang.printmatterail')}}</a>
                                   @endif
                                   </div>
                                 </div>

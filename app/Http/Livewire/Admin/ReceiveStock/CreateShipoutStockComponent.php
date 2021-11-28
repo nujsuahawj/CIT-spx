@@ -7,6 +7,7 @@ use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 use App\Models\Logistic\Logistic;
 use App\Models\Logistic\LogisticDetail;
+use App\Models\Logistic\LogisticDetailList;
 use App\Models\Logistic\LogisticTransection;
 use App\Models\Transaction\ReceiveTransaction;
 use App\Models\Transaction\Matterail;
@@ -35,50 +36,18 @@ class CreateShipoutStockComponent extends Component
 
     public function render()
     {
-
         $traff = '';
         $staff = '';
-        // if(!empty($this->traffic_id)){
-        //     $traff = CreateTraffic::find($this->traffic_id);
-        //     $staff = StaffDoing::where('trf_code', $traff->trf_code)->get();
-        // }
-        
-        // $receive = ReceiveTransaction::select('code','valuedt','status')->where('status', 'N')->orderBy('id','desc')->where('branch_create_id', auth()->user()->branchname->id)->get();
 
-        // $transaction = LogisticTransection::select('id','rvcode','add_date','sendto_unit')->where('status', 'P')->where('branch_id', auth()->user()->branchname->id)
-        // ->where(function($query){
-        //     $query->where('rvcode', 'like', '%' .$this->search_detail. '%');
-        // })->get();
+        $receivetransaction=ReceiveTransaction::select('receive_transactions.*','bs.company_name_la as brs','br.company_name_la as brr','cs.name as css','cr.name as crr') 
+        ->join('branches as bs','receive_transactions.branch_send','=','bs.id')
+        ->join('branches as br','receive_transactions.branch_receive','=','br.id')
+        ->join('customers as cs','receive_transactions.customer_send','=','cs.id')
+        ->join('customers as cr','receive_transactions.customer_receive','=','cr.id')
+        ->where(function($query){
+            $query->where('receive_transactions.code', 'like', '%' .$this->search. '%');
+        })->where('receive_transactions.status', 'ST')->paginate(10);
 
-        // $receivetransaction=ReceiveTransaction::select('receive_transactions.*','bs.company_name_la as brs','br.company_name_la as brr','cs.name as css','cr.name as crr') 
-        // ->join('branches as bs','receive_transactions.branch_send','=','bs.id')
-        // ->join('branches as br','receive_transactions.branch_receive','=','br.id')
-        // ->join('customers as cs','receive_transactions.customer_send','=','cs.id')
-        // ->join('customers as cr','receive_transactions.customer_receive','=','cr.id')
-        // ->where(function($query){
-        //     $query->where('receive_transactions.code', 'like', '%' .$this->search. '%');
-        // })->where('status', 'ST')->paginate(10);
-
-        // if(!empty($this->receiveCode))
-        // {
-
-        //     $matterail = Matterail::select('matterails.id as id','matterails.code','matterails.large','matterails.height','matterails.longs','matterails.weigh','matterails.currency_code','matterails.branch_id as branch_id',
-        //         'matterails.amount','matterails.paid_type','goods_types.name as gname','product_types.name as pname','calculate_types.name as calname')
-        //         ->join('goods_types','matterails.goods_id','=','goods_types.id')
-        //         ->join('product_types','matterails.product_type_id','=','product_types.id')
-        //         ->join('calculate_prices','matterails.cal_price_id','=','calculate_prices.id')
-        //         ->join('calculate_types','calculate_prices.cal_type_id','=','calculate_types.id')
-        //         ->where('matterails.receive_id',  $this->receiveCode)->get();
-        //         // dd($matterail);
-        // }else{
-        //     $matterail = Matterail::select('matterails.id as id','matterails.code','matterails.large','matterails.height','matterails.longs','matterails.weigh','matterails.currency_code','matterails.branch_id',
-        //         'matterails.amount','matterails.paid_type','goods_types.name as gname','product_types.name as pname','calculate_types.name as calname')
-        //         ->join('goods_types','matterails.goods_id','=','goods_types.id')
-        //         ->join('product_types','matterails.product_type_id','=','product_types.id')
-        //         ->join('calculate_prices','matterails.cal_price_id','=','calculate_prices.id')
-        //         ->join('calculate_types','calculate_prices.cal_type_id','=','calculate_types.id')
-        //         ->where('matterails.branch_id',  Auth()->user()->branchname->id)->get();
-        // }
         if(!empty($this->traffic_id)){
             $traff = CreateTraffic::find($this->traffic_id);
             $staff = StaffDoing::where('trf_code', $traff->trf_code)->get();
@@ -91,34 +60,19 @@ class CreateShipoutStockComponent extends Component
             $query->where('rvcode', 'like', '%' .$this->search_detail. '%');
         })->get();
 
-        $receivetransaction=ReceiveTransaction::select('receive_transactions.*','bs.company_name_la as brs','br.company_name_la as brr','cs.name as css','cr.name as crr') 
-        ->join('branches as bs','receive_transactions.branch_send','=','bs.id')
-        ->join('branches as br','receive_transactions.branch_receive','=','br.id')
-        ->join('customers as cs','receive_transactions.customer_send','=','cs.id')
-        ->join('customers as cr','receive_transactions.customer_receive','=','cr.id')
-        ->where(function($query){
-            $query->where('receive_transactions.code', 'like', '%' .$this->search. '%');
-        })->where('status', 'ST')->where('receive_transactions.branch_send', auth()->user()->branchname->id)->paginate(10);
-
         if(!empty($this->receiveCode))
         {
-
             $matterail = Matterail::select('matterails.id as id','matterails.code','matterails.large','matterails.height','matterails.longs','matterails.weigh','matterails.currency_code','matterails.branch_id as branch_id',
-                'matterails.amount','matterails.paid_type','goods_types.name as gname','product_types.name as pname','calculate_types.name as calname')
+                'matterails.amount','matterails.paid_type','goods_types.name as gname','product_types.name as pname')
                 ->join('goods_types','matterails.goods_id','=','goods_types.id')
                 ->join('product_types','matterails.product_type_id','=','product_types.id')
-                ->join('calculate_prices','matterails.cal_price_id','=','calculate_prices.id')
-                ->join('calculate_types','calculate_prices.cal_type_id','=','calculate_types.id')
-                ->where('matterails.receive_id',  $this->receiveCode)->where('matterails.branch_id',  Auth::user()->branchname->id)->get();
-                // dd($matterail);
+                ->where('matterails.receive_id',  $this->receiveCode)->get();
         }else{
             $matterail = Matterail::select('matterails.id as id','matterails.code','matterails.large','matterails.height','matterails.longs','matterails.weigh','matterails.currency_code','matterails.branch_id',
-                'matterails.amount','matterails.paid_type','goods_types.name as gname','product_types.name as pname','calculate_types.name as calname', 'matterails.branch_id as branch_id')
+                'matterails.amount','matterails.paid_type','goods_types.name as gname','product_types.name as pname', 'matterails.branch_id as branch_id')
                 ->join('goods_types','matterails.goods_id','=','goods_types.id')
                 ->join('product_types','matterails.product_type_id','=','product_types.id')
-                ->join('calculate_prices','matterails.cal_price_id','=','calculate_prices.id')
-                ->join('calculate_types','calculate_prices.cal_type_id','=','calculate_types.id')
-                ->where('matterails.branch_id',  Auth::user()->branchname->id)->get();
+                ->get();
         }
         return view('livewire.admin.receive-stock.create-shipout-stock-component',compact('traff', 'staff', 'receive','receivetransaction','transaction','matterail'))->layout('layouts.base');
     }
@@ -135,8 +89,6 @@ class CreateShipoutStockComponent extends Component
             if(!empty($traff))
             {
                 $this->traffic_id = $traff->id;
-                // dd('ss');
-                // $this->dispatchBrowserEvent('show-modal-delete');
                 $this->dispatchBrowserEvent('show-modal-traffic');
             }else{
                 $this->emit('alert', ['type' => 'error', 'message' => 'ລາຍການນີ້ບໍ່ມີໃນລະບົບ!']);
@@ -172,7 +124,26 @@ class CreateShipoutStockComponent extends Component
                 $this->emit('alert', ['type' => 'error', 'message' => 'ລາຍການນີ້ບໍ່ມີໃນລະບົບ!']);
                 $this->billReceive = '';
             }
+    }
 
+    public function addall()
+    {
+        $transaction = Matterail::where('branch_receive', auth()->user()->branchname->id)->where('status','S')->get();
+        
+        foreach($transaction as $item){
+            $receive_tran = ReceiveTransaction::where('code', $item->receive_id)->first();
+
+            $logtran = new LogisticTransection;
+            $logtran->rvcode = $item->receive_id;
+            $logtran->sender_unit = Auth()->user()->branchname->id;
+            $logtran->user_unit = Auth()->user()->id;
+            $logtran->add_date = date('Y-m-d h-i-s');
+            $logtran->sendto_unit = $receive_tran->branch_receive;
+            $logtran->status = 'P';
+            $logtran->branch_id = Auth()->user()->branchname->id;
+            $logtran->save();
+        }
+        $this->emit('alert', ['type' => 'success', 'message' => 'ເພີ່ມ ລາຍການ ສຳເລັດ!']);
     }
 
     public function showDestroyTran($ids)
@@ -193,58 +164,6 @@ class CreateShipoutStockComponent extends Component
 
     public function save()
     {
-        // $transaction = LogisticTransection::select('id','rvcode','add_date','sendto_unit')->where('status', 'P')->where('branch_id', auth()->user()->branchname->id)->first();
-        
-        //     $this->validate([
-        //         'traffic_id'=>'required'
-        //     ],[
-        //         'traffic_id.required'=>'ກຸລະນາເລືອກ ຄິວຂົນສົ່ງ ກ່ອນ!',
-        //     ]);
-        // // dd($transaction->id)
-        // if(!empty($transaction)){
-        //     $logistic = new Logistic();
-        //     $logistic->code = $this->code;
-        //     $logistic->trf_code = $this->traffic_id;
-        //     $logistic->create_date = date('Y-m-d h:i:s');
-        //     $logistic->user_create = auth()->user()->id;
-        //     $logistic->branch_id = auth()->user()->branchname->id;
-        //     $logistic->status = 'S';
-        //     $logistic->save();
-
-        //     $traffic = CreateTraffic::where('trf_code', $this->traffic_id)->first();
-        //     $traffic->stop_date = date('Y-m-d h:i:s');
-        //     $traffic->status = 'S';
-        //     $traffic->save();
-
-        //     $trans = LogisticTransection::select('id','rvcode','sender_unit','user_unit','add_date','sendto_unit','status','branch_id')->where('status', 'P')->where('branch_id', auth()->user()->branchname->id)->get();
-        //     foreach ($trans as $key => $value) {
-        //         $list = array(
-        //             'lgt_id'=>$logistic->id,
-        //             'rvcode'=>$value->rvcode,
-        //             'sender_unit'=>$value->sender_unit,
-        //             'user_unit'=>$value->user_unit,
-        //             'add_date'=>$value->add_date,
-        //             'sendto_unit'=>$value->sendto_unit,
-        //             'status'=>'S',
-        //             'branch_id'=>$value->branch_id,
-        //             'created_at'=> \Carbon\Carbon::now(),
-        //             'updated_at'=> \Carbon\Carbon::now()
-        //         );
-                
-        //         $logisticDetail = LogisticDetail::insert($list);
-
-        //         $receive = DB::table('receive_transactions')->where('code', $value->rvcode)->update(array('status' => 'S'));
-
-        //         $matter = DB::table('matterails')->where('receive_id', $value->rvcode)->update(array('status' => 'S'));
-
-        //         $deleteTrans = LogisticTransection::where('id', $value->id)->delete();
-        //     }
-
-        //     return redirect(route('admin.shipout'));
-        // }else{
-        //     $this->emit('alert', ['type' => 'warning', 'message' => 'ກະລຸນາເພີ່ມລາຍການ ບິນຮັບຝາກເຄື່ອງ ກ່ອນ!']);
-        // }
-
         $transaction = LogisticTransection::select('id','rvcode','add_date','sendto_unit')->where('status', 'P')->where('branch_id', auth()->user()->branchname->id)->first();
         
             $this->validate([
@@ -252,7 +171,7 @@ class CreateShipoutStockComponent extends Component
             ],[
                 'traffic_id.required'=>'ກຸລະນາເລືອກ ຄິວຂົນສົ່ງ ກ່ອນ!',
             ]);
-        // dd($transaction->id)
+        
         if(!empty($transaction)){
             $logistic = new Logistic();
             $logistic->code = $this->code;
@@ -268,6 +187,7 @@ class CreateShipoutStockComponent extends Component
             $traffic->save();
 
             $trans = LogisticTransection::select('id','rvcode','sender_unit','user_unit','add_date','sendto_unit','status','branch_id')->where('status', 'P')->where('branch_id', auth()->user()->branchname->id)->get();
+            
             foreach ($trans as $key => $value) {
                 $list = array(
                     'lgt_id'=>$logistic->id,
@@ -282,6 +202,7 @@ class CreateShipoutStockComponent extends Component
                     'created_at'=> \Carbon\Carbon::now(),
                     'updated_at'=> \Carbon\Carbon::now()
                 ); 
+                
                 $logisticDetail = LogisticDetail::insert($list);
 
                     $detail = LogisticDetail::where('rvcode', $value->rvcode)->first();
@@ -290,7 +211,7 @@ class CreateShipoutStockComponent extends Component
 
                     foreach ($materails as $key => $value2) {
                     $list_mat = array(
-                        'lgt_id'=>$detail->lgt_id,
+                        'lgt_id'=>$logistic->lgt_id,
                         'detail_id'=>$detail->id,
                         'rvcode'=>$detail->rvcode,
                         'code'=>$value2->code,
@@ -319,7 +240,7 @@ class CreateShipoutStockComponent extends Component
                 $deleteTrans = LogisticTransection::where('id', $value->id)->delete();
             }
 
-            return redirect(route('admin.shipout'));
+            return redirect(route('admin.shipout_stock'));
         }else{
             $this->emit('alert', ['type' => 'warning', 'message' => 'ກະລຸນາເພີ່ມລາຍການ ບິນຮັບຝາກເຄື່ອງ ກ່ອນ!']);
         }

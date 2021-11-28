@@ -59,7 +59,7 @@
                           <tr>
                             <td>{{$stt++}}</td>
                             <td>{{$item->code}}</td>
-                            <td>{{$item->trf_code}}</td>
+                            <td>{{$item->trafficname->trf_code}}</td>
                             <td>{{date('d/m/Y h:i:s', strtotime($item->create_date))}}</td>
                             <td>{{$item->username->name}}</td>
                             <td>
@@ -76,7 +76,7 @@
                                   <div class="dropdown-menu" role="menu">
                                     <a class="dropdown-item" href="javascript:void(0)" wire:click="editShipout({{$item->id}})"><i class="fas fa-pencil-alt text-warning"> {{__('lang.edit')}}</i></a>
                                     <a class="dropdown-item" href="javascript:void(0)" wire:click="logisticDetail({{$item->id}})"><i class="fas fa-info-circle text-info"> {{__('lang.detail')}}</i></a>
-                                    <a class="dropdown-item" href="javascript:void(0)" wire:click="showDestroy({{$item->id}})"><i class="fas fa-trash text-danger"> {{__('lang.delete')}}</i></a>
+                                    <!-- <a class="dropdown-item" href="javascript:void(0)" wire:click="showDestroy({{$item->id}})"><i class="fas fa-trash text-danger"> {{__('lang.delete')}}</i></a> -->
                                   </div>
                                 </div>
                             </td>

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
+use DB;
 
 class AuthApiController extends Controller
 {
@@ -72,13 +73,20 @@ class AuthApiController extends Controller
             ],403);
         }
     }
-    public function apilogout()
+    public function apilogout($id)
     {
 
-        Auth::user()->tokens->each(function($token, $key) {
-            $token->delete();
-        });
+        // Auth::user()->tokens->each(function($token, $key) {
+        //     $token->delete();
+        // });
         
+        // return response([
+        //     'message'=>'ອອກລະບົບສຳເລັດ!'
+        // ], 200);
+
+        // $id = auth()->user()->tokens;
+        $logout = DB::table('personal_access_tokens')->where('id', $id)->delete();
+
         return response([
             'message'=>'ອອກລະບົບສຳເລັດ!'
         ], 200);

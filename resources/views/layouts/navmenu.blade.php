@@ -47,7 +47,7 @@
               <li class="dropdown-divider"></li>
               @endif
               <li><a href="{{route('admin.unit_contract')}}" class="dropdown-item">{{__('lang.unit_contract')}}</a></li>
-              <li><a href="{{route('admin.pay_devidend')}}" class="dropdown-item">{{__('lang.pay_dividend')}}</a></li>
+              <!-- <li><a href="{{route('admin.pay_devidend')}}" class="dropdown-item">{{__('lang.pay_dividend')}}</a></li> -->
               @if(auth()->user()->rolename->name == 'staff'  || auth()->user()->rolename->name == 'manger' || auth()->user()->rolename->name == 'admin')
               <!-- <li><a href="" class="dropdown-item">{{__('lang.ewallet')}}</a></li> -->
               @endif
@@ -65,16 +65,15 @@
               <li class="dropdown-divider"></li>
               <li><a href="" class="dropdown-item">{{__('lang.delivery')}}</a></li>
               <li><a href="{{route('admin.call_good')}}" class="dropdown-item">{{__('lang.list_call_good')}}</a></li>
-              <li class="dropdown-submenu dropdown-hover">
+              <!-- <li class="dropdown-submenu dropdown-hover">
                 <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">{{__('lang.ewallet')}}</a>
                 <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
                     <li><a href="{{route('ewallet.vuew_ewtran')}}" class="dropdown-item">{{__('lang.Transaction')}}</a></li>
                     <li><a href="{{route('ewallet.view_ewallet')}}" class="dropdown-item">{{__('lang.account').__('lang.ewallet')}} </a></li>
                     <li><a href="{{route('ewallet.view_clearing')}}" class="dropdown-item">{{__('lang.cod_clearing')}} </a></li>
                     <li><a href="{{route('ewallet.vuew_ewstm')}}" class="dropdown-item">{{__('lang.statement')}} </a></li>
-
                 </ul>
-              </li>
+              </li> -->
 
               <!-- <li><a href="" class="dropdown-item">{{__('lang.cod_service')}}</a></li> -->
               <li><a href="" class="dropdown-item">{{__('lang.online_order')}}</a></li>

@@ -11,137 +11,99 @@
     #printarea { display:block; }
 }
   </style>
-<div  >
-              <div class="row" style="padding: 0%">
-                   <!-- logo  -->
-                <div class="col-6">
-                <br>
-                  <img src="{{asset('images/logo2.png')}}" alt="" width="100%">
-                </div>
-                    <!-- contact  -->
-              
-                <div class="col-6 text-right" >
-                  <br><br>
-                   <h4 style="font-weight: 1000">{{__('lang.print_date')}}: {{date('d/m/Y h:i:s', time())}}</h4>
-                   <h4 style="font-weight: 1000">{{__('lang.tran_date')}}: {{date('d/m/Y',strtotime($vch->valuedt))}}</h4>
-                  <h4 style="font-weight: 1000">
-                        @if (Config::get('app.locale') == 'lo')
-                          {{ $branch->company_name_la }}
-                        @elseif (Config::get('app.locale') == 'en')
-                          {{ $branch->company_name_en }}
-                        @endif
-                  </h4>
-                  <h4 style="font-weight: 1000">{{__('lang.mobile')}}:{{$branch->phone}}</h4>            
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-12 text-center" style="font-size: 72px"><b><u>{{__('lang.invoice')}}</u></b></div>
-              </div>
-            <!-- Main content -->
-            <div class="col-12 p-2 mb-2 mt-2 position top-0 start-50 translate-middle " style="border: 5px solid #000; font-weight:bolder;">
-              <div class="row">
-                <!-- Bill Bar code -->
-                <div class="col-12 text-center" >
-                <img src="data:image/png;base64,{{DNS1D::getBarcodePNG($vch->code, 'C128B',5,90)}}"  alt="barcode"/> 
-                </div>
-              </div>
-              <div class="row" style="border-bottom:5px solid #000; padding:0.5%;">
-                <!-- recieve  -->
-                <div class="col-12 text-center">
-                </div>
-              </div>
-              <div class="row" style="border-bottom:5px solid #000; padding:0.5%;">
-                <!-- Bill Bar code -->
-                <div class="col-12 text-center" >
-                   <h1  style="font-size: 72px"><b>{{$vch->code}}</b></h1>
-                </div>
-              </div>
-              <div class="row" style="border-bottom:5px solid #000; padding:0.5%;">
-                <!-- recieve  -->
-                <div class="col-12 text-center">
-                   <h1><b>{{__('lang.by_sender')}}:{{$vch->bs}} >>> {{__('lang.by_receiver')}}:{{$vch->bc}}</b></h3>
-                   <h1 class="heading-1" style="font-weight: 1000"></h1>
-                </div>
-              </div>
-              <div class="row" style="border-bottom:5px solid #000; padding:0.5%;">
-                <!-- recieve  -->
-                <div class="col-6" style="padding:1%;" >
-                  <h1>{{__('lang.sender_info')}}</h1>
-                  <h1>{{__('lang.name')}} : {{$vch->cs}}</h1>
-                  <h1>{{__('lang.phone')}} : {{$vch->csp}}</h1>
-                 
-                </div>
-                <div class="col-6" style="border-left:5px solid #000; padding:1%; ">
-                  <h1>{{__('lang.recieve_info')}}</h1>
-                  <h1>{{__('lang.name')}} : {{$vch->cr}}</h1>
-                  <h1>{{__('lang.phone')}} : {{$vch->crp}}</h1>
-    
-                </div>             
-              </div>
+@foreach($mtl as $item)
+<div>
 
-              <div class="row" style="border-bottom:5px solid #000; padding:0.5%;">
-                <!-- recieve  -->
-                <div class="col-6" style="padding:1%;" >
-                  <h1><b>{{__('lang.qty')}}{{__('lang.products')}} :</b></h1><br>
-                  <h1 style="text-align:right"><div style="font-size: 48px"><b>{{number_format($count_product)}}</b> {{__('lang.product')}}</div></h1>
-                </div>
-                <div class="col-6" style="border-left:5px solid #000; padding:1%; ">
-                  <h1><b>{{__('lang.subtotal')}} :</b></h1> <br>
-                  <h1 style="text-align:right"><div style="font-size: 48px"><b>{{number_format($sum_product)}}</b> {{__('lang.lak')}}</div></h1>
-                </div>             
-              </div>
-              <div class="row " style="border-bottom:5px solid #000;">
-                  <div class="col-6 text-center" style="padding:0.5%;">
-                     <h1 class="heading-2" style="font-weight: 1000">** {{__('lang.insurance')}}{{__('lang.product')}} 3 % **</h1>
-                  </div>
-                 <div class="col-6 text-left" style="border-left:5px solid #000; padding:0.5%; ">
-                          <h1 style="font-weight: 1000 " class=" text-right">{{number_format($vch->insur_amount)}} {{__('lang.lak')}}</h1>                     
-                 </div>
-              </div>
-              @if($vch->service_type=='COD')  
-              <div class="row " style="border-bottom:5px solid #000;">
-                  <div class="col-6 text-center" style="padding:0.5%;">
-                     <h1 class="heading-2" style="font-weight: 1000">** {{__('lang.cod_cost')}} **</h1>
-                    
-                  </div>
-
-                 <div class="col-6 text-left" style="border-left:5px solid #000; padding:0.5%; text-align:right; ">
-                                    
-                
-                          <h1 style="font-weight: 1000 " class="heading-2 text-right"> {{number_format($vch->cod_amount) . $vch->currency_code }}</h1>                     
-   
-                     
-                 </div>
-              </div>
-              @endif
-
-              <div class="row " style="border-bottom:5px solid #000;">
-                  <div class="col-6 text-center" style="padding:0.5%;">
-                     <h1 class="heading-2 text-right" style="font-weight: 1000">{{__('lang.grandtotal')}} :</h1>
-                  </div>
-                 <div class="col-6 text-left" style="border-left:5px solid #000; padding:0.5%; ">
-                          <h1 style="font-weight: 1000 " class="heading-2 text-right">{{number_format($sum_product+$vch->cod_amount+$vch->insur_amount)}} {{__('lang.lak')}}</h1>                     
-                 </div>
-              </div>
-           </div>
-  
-           <div class="row ">
-                <div class="col-6 text-center" style="padding:0.5%;" >
-                  <!-- <h1 class="heading-1" style="font-weight: 1000">{{__('lang.sigstaff')}}</h1> -->
-                  <h1><br></h1>
-                  <h1><br></h1>
-                  <h1><br></h1>
-                  <h1><br></h1>
-                 
-                </div>          
-              </div>    
-
-            </div>
-            <!-- /.invoice -->
-
-
+<div class="col-12 p-2 mb-2 mt-2 position top-0 start-50 translate-middle " style="border: 5px solid #000; font-weight:bolder;">
+  <div class="row">
+    <div class="col-2" style="text-align:right;">
+    <img src="{{asset('images/logo.png')}}" alt="" width="80%">
+    </div>
+    <div class="col-10">
+       <h1><b>&emsp;&emsp;{{__('lang.title_la')}} {{__('lang.title')}}</b></h1><br>
+       <h1><b>&emsp;&emsp;&emsp;&emsp;{{date('d/m/Y h:i:s', strtotime($item->receivename->created_at))}}</b></h1>
+    </div>
   </div>
-  
+</div> <!-- End Div Scope -->
+<div class="row">
+  <div class="col-12" style="text-align:center;">
+    <img src="data:image/png;base64,{{DNS1D::getBarcodePNG($item->receivename->code, 'C128B',5,90)}}"  alt="barcode"/><br>
+    <h2  style="font-size: 48px"><b>{{$item->receivename->code}}</b></h2>
+  </div>
+</div> <!-- End Row -->
+<div class="row" style="border: 5px solid #000; font-weight:bolder;">
+  <div class="col-8" style="padding:1%; border-left:5px solid #000;" >
+    <h1>{{__('lang.customer_send')}}</h2>
+    <h1>&emsp;&emsp; {{$item->receivename->customername_send->name}}</h1>
+    <h1>&emsp;&emsp; {{$item->receivename->customername_send->phone}}</h1>
+  </div>
+  <div class="col-4" style="border-left:5px solid #000; border-right:5px solid #000; padding:1%; background-color: #000; text-align:center;">
+    <h2  style="font-size: 100px; color: #fff; "><b>{{$item->receivename->branch_sends->code}}</b></h2>
+  </div>             
+</div> <!-- End Row -->
+<div class="col-12 p-2 mb-2 mt-2 position top-0 start-50 translate-middle " style="border: 5px solid #000; font-weight:bolder;">
+  <div class="row">
+    <div class="col-12">
+      <h1>{{__('lang.customer_receive')}}</h1>
+      <h1>&emsp;&emsp; {{$item->receivename->customername_receive->name}}</h1>
+      <h1>&emsp;&emsp; {{$item->receivename->customername_receive->phone}}</h1>
+      <h1>&emsp;&emsp; {{__('lang.branch')}} {{$item->receivename->branch_receive_name->company_name_la}} / {{__('lang.villages')}} {{$item->receivename->branch_receive_name->villname->name}}</h1>
+    </div>
+  </div>
+</div> <!-- End Div Scope -->
+<div class="col-12 p-2 mb-2 mt-2 position top-0 start-50 translate-middle " style="border: 5px solid #000; font-weight:bolder;">
+  <div class="row">
+    <div class="col-6">
+      <h2>&emsp;&emsp;{{__('lang.qty')}}</h2>
+      <h2>&emsp;&emsp;{{__('lang.size')}}</h2>
+      <h2>&emsp;&emsp;{{__('lang.weigh')}}</h2>
+      <h2>&emsp;&emsp;{{__('lang.amount_fak')}}</h2>
+      <h2>&emsp;&emsp;{{__('lang.inlao_fak')}}</h2>
+      <h2>&emsp;&emsp;COD</h2>
+      <h2>&emsp;&emsp;{{__('lang.insurance')}} 3 %</h2>
+      <h2>&emsp;&emsp;{{__('lang.packing')}}</h2>
+      <h2>&emsp;&emsp;{{__('lang.sum')}}</h2>
+    </div>
+    <div class="col-4" style="text-align: right">
+      <h2>&emsp;&emsp;1/1</h2>
+      <h2>&emsp;&emsp;{{$item->large + $item->height + $item->longs}}</h2>
+      <h2>&emsp;&emsp;{{$item->weigh}}</h2>
+      <h2>&emsp;&emsp;{{number_format($item->amount)}}</h2>
+      <h2>&emsp;&emsp;{{number_format($item->amount)}}</h2>
+      <h2>&emsp;&emsp;{{number_format($item->cod_amount)}}</h2>
+      <h2>&emsp;&emsp;{{number_format($item->insur_amount)}}</h2>
+      <h2>&emsp;&emsp;0</h2>
+      <h2>&emsp;&emsp;{{number_format($item->amount + $item->cod_amount + $item->insur_amount)}}</h2>
+    </div>
+    <div class="col-2">
+      <h2>&emsp;&emsp;</h2>
+      <h2>&emsp;&emsp;Cm</h2>
+      <h2>&emsp;&emsp;Kg</h2>
+      <h2>&emsp;&emsp;{{__('lang.lak')}}</h2>
+      <h2>&emsp;&emsp;{{__('lang.lak')}}</h2>
+      <h2>&emsp;&emsp;{{__('lang.lak')}}</h2>
+      <h2>&emsp;&emsp;{{__('lang.lak')}}</h2>
+      <h2>&emsp;&emsp;{{__('lang.lak')}}</h2>
+      <h2>&emsp;&emsp;{{__('lang.lak')}}</h2>
+    </div>
+  </div>
+</div> <!-- End Div Scope -->
+<div class="row">
+  <div class="col-8">
+    <h2>{{__('lang.branch_sent')}} : {{__('lang.branch')}} {{$item->receivename->branch_sends->company_name_la}}</h2>
+    <h2>{{__('lang.tel_branch')}} : {{$item->receivename->branch_sends->phone}}</h2>
+    <h2>{{__('lang.branch_receive')}} : {{__('lang.branch')}} {{$item->receivename->branch_receive_name->company_name_la}}</h2>
+    <h2>{{__('lang.tel_branch')}} : {{$item->receivename->branch_receive_name->phone}}</h2>
+  </div>
+  <div class="col-4" style="text-align: center">
+    <h2  style="font-size: 48px"><b>{{__('lang.tel_help')}}</b></h2><br>
+    <h2  style="font-size: 48px"><b>XXXX</b></h2>
+  </div>
+</div>
+
+</div>
+@endforeach
+
   @push('scripts')
       <script>
 

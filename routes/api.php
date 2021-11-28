@@ -40,7 +40,7 @@ Route::get('/apireceive/searchorder/{name}', [App\Http\Controllers\Api\ReceiveAp
 Route::group(['middleware' => ['auth:sanctum']], function (){
     Route::get('/apiuser', [App\Http\Controllers\Api\AuthApiController::class, 'apiuser']);
     Route::post('/user/update', [App\Http\Controllers\Api\AuthApiController::class, 'update']);
-    Route::post('/apilogout', [App\Http\Controllers\Api\AuthApiController::class, 'apilogout']);
+    Route::post('/apilogout/{id}', [App\Http\Controllers\Api\AuthApiController::class, 'apilogout']);
     
     //Receive
     Route::get('/apireceive/indexorder', [App\Http\Controllers\Api\ReceiveApiController::class, 'indexbill']);

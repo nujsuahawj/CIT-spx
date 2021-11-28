@@ -25,4 +25,10 @@ class ViewShipoutStockComponent extends Component
 
         return view('livewire.admin.receive-stock.view-shipout-stock-component',compact('shipout'))->layout('layouts.base');
     }
+
+    //Logistic Detail
+    public function logisticDetail($id)
+    {
+        return redirect(route('admin.detail_shipout_stock', $id));
+    }
 }
