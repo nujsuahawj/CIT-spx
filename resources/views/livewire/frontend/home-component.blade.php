@@ -12,7 +12,7 @@
                     </ol>
                     <div class="carousel-inner">
                     @foreach ($sliders as $key => $item)
-                        <div class="carousel-item position-relative {{$key == 0 ? 'active' : '' }}" style="height: 430px;">
+                        <div class="carousel-item position-relative {{$key == 0 ? 'active' : '' }}" style="height: 1400px;">
                             <img class="position-absolute w-100 h-100" src="{{asset($item->image)}}" style="object-fit: cover;">
                             <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                                 <div class="p-3" style="max-width: 700px;">
