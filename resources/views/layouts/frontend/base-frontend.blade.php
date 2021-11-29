@@ -9,7 +9,7 @@
     <meta content="{{__('blog.title_website')}}" name="description">
 
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+    <link href="{{asset('images/logo.png')}}" type="image/png" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -53,7 +53,7 @@
             </div>
             <div class="col-lg-4 col-6 text-right">
                 <p class="m-0">{{__('blog.title_website')}}</p>
-                <h5 class="m-0">+012 345 6789</h5>
+                <h5 class="m-0">+85620 94445222</h5>
             </div>
         </div>
     </div>
