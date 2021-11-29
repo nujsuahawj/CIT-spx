@@ -59,11 +59,11 @@ class CreateReceiveTransactionComponent extends Component
         $max_cus = Customer::select('id')->count('id');
         if(!empty($max_cus)){
             $sum_cus = $max_cus+1;
-            $this->code_cus =  'SLSCR'.$sum_cus;
-            $this->code_cus_send =  'SLSCS'.$sum_cus;
+            $this->code_cus =  'SPXCR'.$sum_cus;
+            $this->code_cus_send =  'SPXCS'.$sum_cus;
         }else{
-            $this->code_cus =  'SLSCR'.'1';
-            $this->code_cus_send =  'SLSCS'.'1';
+            $this->code_cus =  'SPXCR'.'1';
+            $this->code_cus_send =  'SPXCS'.'1';
         }
         $this->code_cus =  'C'.date('Ymdms');
     }
