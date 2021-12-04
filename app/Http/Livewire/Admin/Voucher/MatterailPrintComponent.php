@@ -29,6 +29,8 @@ class MatterailPrintComponent extends Component
         $branchid  = Auth()->user()->branchname->id;
         
         $mtl = Matterail::where('receive_id', $currentURL)->get();
-        return view('livewire.admin.voucher.matterail-print-component',compact('mtl'))->layout('layouts.base');
+        $count_mtl = Matterail::select('id')->where('receive_id', $currentURL)->count('id');
+        $num = 1;
+        return view('livewire.admin.voucher.matterail-print-component',compact('mtl','count_mtl','num'))->layout('layouts.base');
     }
 }
