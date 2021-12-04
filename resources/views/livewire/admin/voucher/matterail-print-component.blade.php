@@ -11,6 +11,7 @@
     #printarea { display:block; }
 }
   </style>
+
 @foreach($mtl as $item)
 <div>
 
@@ -28,7 +29,7 @@
 <div class="row">
   <div class="col-12" style="text-align:center;">
     <img src="data:image/png;base64,{{DNS1D::getBarcodePNG($item->receivename->code, 'C128B',5,90)}}"  alt="barcode"/><br>
-    <h2  style="font-size: 48px"><b>{{$item->receivename->code}}</b></h2>
+    <h2  style="font-size: 48px"><b>SPX-{{$item->receivename->code}}</b></h2>
   </div>
 </div> <!-- End Row -->
 <div class="row" style="border: 5px solid #000; font-weight:bolder;">
@@ -38,7 +39,7 @@
     <h1>&emsp;&emsp; {{$item->receivename->customername_send->phone}}</h1>
   </div>
   <div class="col-4" style="border-left:5px solid #000; border-right:5px solid #000; padding:1%; background-color: #000; text-align:center;">
-    <h2  style="font-size: 100px; color: #fff; "><b>{{$item->receivename->branch_sends->code}}</b></h2>
+    <h2  style="font-size: 72px; color: #fff; "><b>{{$item->receivename->branch_receive_name->code}}</b></h2>
   </div>             
 </div> <!-- End Row -->
 
@@ -61,18 +62,18 @@
       <h2>&emsp;&emsp;{{__('lang.size')}}</h2>
       <h2>&emsp;&emsp;{{__('lang.weigh')}}</h2>
       <h2>&emsp;&emsp;{{__('lang.amount_fak')}}</h2>
-      <h2>&emsp;&emsp;{{__('lang.inlao_fak')}}</h2>
+      <h2>&emsp;&emsp;{{__('lang.innork_fak')}}</h2>
       <h2>&emsp;&emsp;COD</h2>
       <h2>&emsp;&emsp;{{__('lang.insurance')}} 3 %</h2>
       <h2>&emsp;&emsp;{{__('lang.packing')}}</h2>
       <h2>&emsp;&emsp;{{__('lang.sum')}}</h2>
     </div>
     <div class="col-4" style="text-align: right">
-      <h2>&emsp;&emsp;1/1</h2>
+      <h2>&emsp;&emsp;{{$num++}}/{{$count_mtl}}</h2>
       <h2>&emsp;&emsp;{{$item->large + $item->height + $item->longs}}</h2>
       <h2>&emsp;&emsp;{{$item->weigh}}</h2>
       <h2>&emsp;&emsp;{{number_format($item->amount)}}</h2>
-      <h2>&emsp;&emsp;{{number_format($item->amount)}}</h2>
+      <h2>&emsp;&emsp;0</h2>
       <h2>&emsp;&emsp;{{number_format($item->cod_amount)}}</h2>
       <h2>&emsp;&emsp;{{number_format($item->insur_amount)}}</h2>
       <h2>&emsp;&emsp;0</h2>
