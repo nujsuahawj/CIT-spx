@@ -59,6 +59,7 @@ Route::group(['middleware'=> 'adminLogin'], function(){
     Route::get('/payment_type', App\Http\Livewire\Admin\Settings\PaymentTypeComponent::class)->name('admin.payment_type');
     Route::get('/insurance', App\Http\Livewire\Admin\Settings\InsuranceComponent::class)->name('admin.insurance');
     Route::get('/shipping_status', App\Http\Livewire\Admin\Settings\ShippingStatusComponent::class)->name('admin.shipping_status');
+    Route::get('/packet', App\Http\Livewire\Admin\Settings\PacketComponent::class)->name('admin.packet');
 
     Route::get('/dividend', App\Http\Livewire\Admin\Settings\DividendComponent::class)->name('admin.dividend');
     Route::get('/vat', App\Http\Livewire\Admin\Settings\VatComponent::class)->name('admin.vat');

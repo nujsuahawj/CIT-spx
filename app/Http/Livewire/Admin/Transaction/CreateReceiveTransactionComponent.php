@@ -86,14 +86,6 @@ class CreateReceiveTransactionComponent extends Component
                     ->join('calculate_prices','matterails.cal_price_id','=','calculate_prices.id')
                     ->where('receive_id',  $this->code) ->paginate(10);
 
-
-    //    $distances=CalculatePrice::select('calculate_prices.distance_id as id','distances.name as name')
-    //               ->join('distances','calculate_prices.distance_id','=','distances.id')
-    //               ->where('calculate_prices.status',1)
-    //               ->where('calculate_prices.del',1)
-    //               ->where('calculate_prices.branch_id',Auth()->user()->branchname->id)
-    //               ->groupBy('calculate_prices.distance_id','calculate_prices.status','calculate_prices.del','distances.name')->get();
-
         $distances = Distance::where('status',1)->get();
 
         $branch = Branch::select('branches.id as id','branches.code','branches.company_name_la as company_name_la','branches.company_name_en as company_name_en','pv.name as pvname','dt.name as dtname','vl.name as vlname')
@@ -195,56 +187,56 @@ class CreateReceiveTransactionComponent extends Component
 
 
         $fprod=ProductType::where('id',$this->product_type_id)->first();
+
         if($fprod->func_type=='CP')
         {
-                  $this->v=$this->large + $this->height + $this->longs;
+                $this->v=$this->large + $this->height + $this->longs;
+        
+                if($this->v<=280 && $this->weigh<=30)
+                {
 
-                    $find_cal1 = CalculatePrice::select('calculate_prices.id as id','pf.price as price')
-                                ->join('price_funcs as pf', 'calculate_prices.id', '=', 'pf.cal_price_id')
-                                    ->where('calculate_prices.distance_id',$this->dist_id)
-                                  //  ->where('calculate_prices.branch_id',Auth()->user()->branchname->id )
-                                    ->where('calculate_prices.cal_type_id',1)
-                                    ->where('calculate_prices.min_val','<=',$this->v)
-                                    ->where('calculate_prices.max_val','>',$this->v)
-                                    ->where('pf.currency_code',$this->r1)
-                                    ->where('del',1)
-                                    ->first();
+                   $find_price = CalculatePrice::
+                                selectRaw('max(id) as id,max(price) AS price') 
+                                ->where(function ($query){ $query->where('min_val','<=',$this->weigh)->orWhere('max_val','<=',$this->v); })
+                                ->where('cal_type_id',1)->where('status',1)->where('del',1)
+                                ->first();
+                       
+                        if(!empty($find_price))
+                        {
+                            $this->cal_price = $find_price->price;
+                            $this->fun_id= $find_price->id;
+                            $this->rec_matterail();
+ 
+                        } else { $this->emit('alert', ['type' => 'warning', 'message' => 'ເຄື່ອງບໍ່ຢູ່ໃນເງື່ອນໄຂການຄິດໄລ່ເງິນ!']); }
 
-
-                    $find_cal2 = CalculatePrice::select('calculate_prices.id as id','pf.price as price')
-                                ->join('price_funcs as pf', 'calculate_prices.id', '=', 'pf.cal_price_id')
-                                    ->where('calculate_prices.distance_id',$this->dist_id)
-                                  //  ->where('calculate_prices.branch_id',Auth()->user()->branchname->id)
-                                    ->where('calculate_prices.cal_type_id',2)
-                                    ->where('calculate_prices.min_val','<=',$this->weigh)
-                                    ->where('calculate_prices.max_val','>',$this->weigh)
-                                    ->where('pf.currency_code',$this->r1)
-                                    ->where('del',1)
-                                    ->first();
-
-                    if(!empty($find_cal1->id) && !empty($find_cal2->id))
+                }
+                elseif($this->v<=280 && $this->weigh>30)
+                {
+                    $find_price=CalculatePrice::select('id','price')->where('min_val','<',$this->weigh)->where('max_val','>=',$this->weigh)
+                                                ->where('status',1)->where('cal_type_id',2)->where('del',1)->first();
+                    if(!empty($find_price))
                     {
-                        if($this->v >= 201) {   $this->v_price=(($this->large * $this->height * $this->longs)/6000) * $find_cal1->price;    }
-                        else {  $this->v_price=$find_cal1->price;  }
-
-                        if($this->weigh>=51){   $this->w_price=$find_cal2->price * $this->weigh; }
-                        else {  $this->w_price=$find_cal2->price; }
-
-                        if ($this->v_price > $this->w_price) 
-                        {  
-                                $this->cal_price = $this->v_price; 
-                                $this->fun_id=$find_cal1->id;
-                        }
-                        else{
-                                $this->cal_price = $this->w_price;
-                                $this->fun_id=$find_cal2->id;
-                            }
-
+                        $this->cal_price = $find_price->price * $this->weigh;
+                        $this->fun_id= $find_price->id;
                         $this->rec_matterail();
 
-                    }
-                    else {  $this->emit('alert', ['type' => 'warning', 'message' => 'ເຄື່ອງບໍ່ຢູ່ໃນເງື່ອນໄຂການຄິດໄລ່ເງິນການຄິດໄລ່ເງິນ!']);  }
+                    } else { $this->emit('alert', ['type' => 'warning', 'message' => 'ເຄື່ອງບໍ່ຢູ່ໃນເງື່ອນໄຂການຄິດໄລ່ເງິນ!']); }
 
+                }
+                else{
+                     
+                     $this->w_price =($this->large * $this->height * $this->longs)/5000;
+                     $find_price=CalculatePrice::select('id','price')->where('min_val','<',$this->w_price)->where('max_val','>=',$this->w_price)
+                                                        ->where('status',1)->where('cal_type_id',3)->where('del',1)->first();
+                     if(!empty($find_price))
+                     {
+                         $this->cal_price = $find_price->price * $this->w_price;
+                         $this->fun_id= $find_price->id;
+                         $this->rec_matterail();
+ 
+                     } else { $this->emit('alert', ['type' => 'warning', 'message' => 'ເຄື່ອງບໍ່ຢູ່ໃນເງື່ອນໄຂການຄິດໄລ່ເງິນ!']); }
+
+                }
 
         }
         elseif($fprod->func_type=='FX')
