@@ -30,9 +30,10 @@ class ReceivePrintComponent extends Component
         $currentURL = \Request::segment(2);
         $branchid  = Auth()->user()->branchname->id;
 
-        $mtl = Matterail::where('receive_id', $currentURL)->get();
+        $receive = ReceiveTransaction::where('code', $currentURL)->first();
+        $count_mtl = Matterail::select('id')->where('receive_id', $currentURL)->count('id');
                     
-        return view('livewire.admin.voucher.receive-print-component',compact('mtl'))->layout('layouts.base');
+        return view('livewire.admin.voucher.receive-print-component',compact('receive','count_mtl'))->layout('layouts.base');
        //return view('livewire.admin.voucher.receive-print-component');
     }
 }

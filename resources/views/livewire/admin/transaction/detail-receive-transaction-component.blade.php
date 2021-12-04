@@ -16,7 +16,7 @@
             </div>
             <div class="row">
               <div class="col-md-4 text-center">
-                <img src="{{asset('images/logosls.png')}}" width="70%">
+                <img src="{{asset('images/logo.png')}}" width="70%">
               </div>
               <div class="col-md-8 text-right">
               <br><br>
@@ -94,7 +94,7 @@
                             <td>{{$item->receive_id}}</td>
                             <td>{{$item->goodname->name}}</td>
                             <td>{{$item->weigh}}</td>
-                            <td>@if($item->paid_type=='SD') {{__('lang.by_sender')}}@else {{__('lang.by_receiver')}}@endif</td>
+                            <td>@if($item->paid_by=='SD') {{__('lang.by_sender')}}@else {{__('lang.by_receiver')}}@endif</td>
                             <td align="right">{{number_format($item->amount)}}</td>
                         </tr>
                         @endforeach

@@ -606,6 +606,7 @@ return [
     'separate_goods_report'=>'ລາຍງານການແຍກວັດສະດຸ',
     'amount_fak'=>'ຄ່າຝາກ',
     'inlao_fak'=>'ຄ່າຝາກພາຍໃນປະເທດ',
+    'innork_fak'=>'ຄ່າຝາກຈາກຕ່າງປະເທດ',
     'packing'=>'ຄ່າ Packing',
     'tel_help'=>'ສາຍດ່ວນ',
 ];

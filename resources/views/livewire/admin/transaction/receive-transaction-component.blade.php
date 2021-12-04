@@ -30,7 +30,7 @@
                     <label><a  class="btn btn-primary btn-sm" href="{{route('transaction.create')}}">{{__('lang.create')}}</a></label>
                   </div>
                   <div class="col-md-3">
-                    <input wire:model="search" type="text" class="form-control" placeholder="{{__('lang.search')}}">
+                    <input wire:model="search" type="date" class="form-control" placeholder="{{__('lang.search')}}">
                   </div>
                   <div class="col-md-3">
                     <input wire:model="search_by_date" type="text" class="form-control" placeholder="{{__('lang.search')}}">
@@ -62,6 +62,7 @@
                         <th>{{__('lang.customer_receive')}}</th>
                         <th>{{__('lang.amount')}}</th>
                         <th>{{__('lang.status')}}</th>
+                        <th>{{__('lang.paid_type')}}</th>
                         <th>{{__('lang.created_at')}}</th>
                         <th>{{__('lang.action')}}</th>
                       </tr>
@@ -96,6 +97,13 @@
                                   @elseif($item->status == 'SC')
                                     <div class="btn btn-primary btn-xs"> {{__('lang.send_goods_customer_finish')}} </div>
                                   @endif
+                        </td>
+                        <td>
+                            @if($item->paid_by=='SD') 
+                              <div class="btn btn-success btn-xs">{{__('lang.by_sender')}}</div>
+                            @else 
+                              <div class="btn btn-warning btn-xs">  {{__('lang.by_receiver')}}</div>
+                            @endif
                         </td>
                         <td>{{date('d/m/Y h:i:s', strtotime($item->created_at))}}</td>
                         <td>
