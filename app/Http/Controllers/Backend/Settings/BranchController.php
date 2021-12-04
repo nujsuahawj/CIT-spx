@@ -23,7 +23,7 @@ class BranchController extends Controller
      */
     public function index()
     {
-        $branch = Branch::where('del',1)->get();
+        $branch = Branch::where('del',1)->orderBy('id','desc')->get();
         return view('backend.settings.branch.index', compact('branch'));
     }
 
