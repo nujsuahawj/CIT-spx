@@ -31,7 +31,7 @@
                              <div class="col-md-12">
                                 <div class="form-group">
                                     <label>{{__('lang.code')}}</label>
-                                    <input wire:model="code" type="text" class="form-control @error('code') is-invalid @enderror" placeholder="{{__('lang.code')}}">
+                                    <input wire:model="code" type="text" class="form-control @error('code') is-invalid @enderror" placeholder="{{__('lang.code')}}" {{$disab}}>
                                     @error('code') <span style="color: red" class="error">{{ $message }}</span> @enderror
                                 </div>
                                 <div class="form-group">
@@ -42,21 +42,21 @@
                              </div>
                              <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>{{__('lang.larg')}} (Cm)</label>
+                                    <label>{{__('lang.large')}} (Cm)</label>
                                     <input wire:model="largs" type="number" class="form-control @error('largs') is-invalid @enderror" placeholder="{{__('lang.larg')}}">
                                     @error('largs') <span style="color: red" class="error">{{ $message }}</span> @enderror
                                 </div>
                              </div>
                              <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>{{__('lang.hiegh')}} (Cm)</label>
+                                    <label>{{__('lang.height')}} (Cm)</label>
                                     <input wire:model="hieghs" type="number" class="form-control @error('hieghs') is-invalid @enderror" placeholder="{{__('lang.hiegh')}}">
                                     @error('hieghs') <span style="color: red" class="error">{{ $message }}</span> @enderror
                                 </div>
                              </div>
                              <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>{{__('lang.long')}} (Cm)</label>
+                                    <label>{{__('lang.longs')}} (Cm)</label>
                                     <input wire:model="longs" type="number" class="form-control @error('longs') is-invalid @enderror" placeholder="{{__('lang.long')}}">
                                     @error('longs') <span style="color: red" class="error">{{ $message }}</span> @enderror
                                 </div>
@@ -65,8 +65,8 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>{{__('lang.currency')}} (Cm)</label>
-                                    <select wire:model="currency" class="form-control">
+                                    <label>{{__('lang.currency')}} </label>
+                                    <select wire:model="currency" class="form-control" readonly>
                                         <option value="" selected>{{__('lang.select')}}</option>
                                         <option value="LAK" selected>{{__('lang.LAK')}}</option>
                                         <option value="THB" selected>{{__('lang.THB')}}</option>
@@ -135,10 +135,11 @@
                             <thead>
                               <tr>
                                 <th>{{__('lang.no')}}</th>
+                                <th>{{__('lang.code')}}</th>
                                 <th>{{__('lang.name')}}</th>
-                                <th>{{__('lang.larg')}}</th>
-                                <th>{{__('lang.hiegh')}}</th>
-                                <th>{{__('lang.long')}}</th>
+                                <th>{{__('lang.large')}} (Cm)</th>
+                                <th>{{__('lang.height')}} (Cm)</th>
+                                <th>{{__('lang.longs')}} (Cm)</th>
                                 <th>{{__('lang.currency')}}</th>
                                 <th>{{__('lang.price')}}</th>
                                 <th>{{__('lang.status')}}</th>
@@ -159,7 +160,7 @@
                                 <td>{{$item->hieghs}}</td>
                                 <td>{{$item->longs}}</td>
                                 <td>{{$item->currency_code}}</td>
-                                <td>{{$item->price}}</td>
+                                <td class="text-right">{{number_format($item->price,2,',','.')}}</td>
                                 <td>@if($item->status==0) <div class="btn btn-warning btn-xs">{{__('lang.disable')}}</div> @else <div class="btn btn-info btn-xs"> {{__('lang.enable')}} </div>  @endif</td>
                                 <td>
                                   @if(Auth()->user()->rolename->name == 'admin')
@@ -186,4 +187,39 @@
         </div>
         </div>
     </section>
+
+     <!-- /.modal-delete -->
+     <div class="modal fade" id="modal-delete">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">{{__('lang.delete')}}</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" wire:model="delId">
+            <h3>{{ "( ".$delname." )" . __('lang.do_you_want_to_delete') }}</h3>
+          </div>
+          <div class="modal-footer justify-content-between">
+            <button wire:click="destroy({{$delId}})" type="button" class="btn btn-danger">{{__('lang.delete')}}</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal">{{__('lang.close')}}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
 </div>
+
+@push('scripts')
+    <script>
+      window.addEventListener('show-modal-delete', event => {
+          $('#modal-delete').modal('show');
+      })
+      window.addEventListener('hide-modal-delete', event => {
+          $('#modal-delete').modal('hide');
+      })
+    </script>
+@endpush
+

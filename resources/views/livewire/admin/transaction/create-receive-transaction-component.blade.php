@@ -318,6 +318,18 @@
 
                       <div class="col-md-1"> 
                         <div class="form-group">
+                              <label>{{__('lang.packing')}}</label>
+                              <select wire:model="pack" class="form-control" >
+                                <option value="0|0">{{__('lang.select')}}</option>
+                                @foreach ($packet as $item)
+                                <option value="{{$item->id}}|{{$item->price}}">{{$item->name}}</option> 
+                                @endforeach     
+                              </select>
+                        </div>
+                      </div>
+
+                      <div class="col-md-1"> 
+                        <div class="form-group">
                               <label>{{__('lang.paid_type')}}</label>
                               <select wire:model="piadtype" class="form-control" {{$isDisabled1}}>
                                 <option value="SD">{{__('lang.by_sender')}}</option>
@@ -326,7 +338,9 @@
                         </div>
                       </div>
 
-                      <div class="col-md-2"> 
+                     
+
+                      <div class="col-md-1"> 
                           <div class="form-group">
                               <label>{{__('lang.cod_service_amount')}}</label>
                               <input wire:model="amount"  type="number" class="form-control"  aria-label="{{__('lang.amount')}}" {{$hide_cod}} >
@@ -362,6 +376,7 @@
                                                   <th>{{__('lang.weigh')}}(kg)</th>
                                                   <th>{{__('lang.calculator_type')}}</th>
                                                   <th>{{__('lang.amount')}}</th>
+                                                  <th>{{__('lang.packing')}}</th>
                                                   <th>{{__('lang.paid_type')}}</th>
                                                   <th>{{__('lang.cod_service_amount')}}</th>
                                                   <th>{{__('lang.insurance')}}</th>
@@ -384,10 +399,11 @@
                                                   <td>{{$item->longs}}</td>
                                                   <td>{{$item->weigh}}</td>
                                                   <td>{{$item->calname}}</td>
-                                                  <td>{{number_format($item->amount,2,",",".") ." ". $item->currency_code}}</td>
+                                                  <td class="text-right">{{number_format($item->amount,2,",",".") ." ". $item->currency_code}}</td>
+                                                  <td class="text-right">{{number_format($item->pack_amount,2,",",".")." ".$item->currency_code}}</td>
                                                   <td>@if($item->paid_type=='SD') {{__('lang.by_sender')}}@else {{__('lang.by_receiver')}}@endif</td>
-                                                  <td>{{number_format($item->cod_amount,2,",",".")}}</td>
-                                                  <td>{{number_format($item->insur_amount,2,",",".")}}</td>
+                                                  <td class="text-right">{{number_format($item->cod_amount,2,",",".")." ".$item->currency_code}}</td>
+                                                  <td class="text-right">{{number_format($item->insur_amount,2,",",".")." ".$item->currency_code}}</td>
                                                   <td>
                                                      <button wire:click="showDestroy({{$item->id}})" type="button" class="btn btn-warning btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="{{__('lang.Take Out')}}" {{$btnStatus1}}>
                                                        <i class="fa fa-minus" aria-hidden="true"></i>                          
