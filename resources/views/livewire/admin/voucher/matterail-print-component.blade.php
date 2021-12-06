@@ -13,7 +13,7 @@
   </style>
 
 @foreach($mtl as $item)
-<div>
+<div style="background-color: #fff">
 
 <div class="col-12 p-2 mb-2 mt-2 position top-0 start-50 translate-middle " style="border: 5px solid #000; font-weight:bolder;">
   <div class="row">
@@ -48,7 +48,7 @@
       <h1>{{__('lang.customer_receive')}}</h1>
       <h1>&emsp;&emsp; {{$item->receivename->customername_receive->name}}</h1>
       <h1>&emsp;&emsp; {{$item->receivename->customername_receive->phone}}</h1>
-      <h1>&emsp;&emsp; {{__('lang.branch')}} {{$item->receivename->branch_receive_name->company_name_la}} / {{__('lang.villages')}} {{$item->receivename->branch_receive_name->villname->name}}</h1>
+      <h1>&emsp;&emsp; {{$item->receivename->branch_receive_name->company_name_la}}@if(!empty($item->receivename->customername_receive->vil_id)) /  {{__('lang.villages')}} {{$item->receivename->customername_receive->villname->name}}@endif</h1>
     </div>
     <div class="col-3" style="border-left: 5px solid #000; border-right:5px solid #000; text-align: center">
       <h1>{{__('lang.signal_receive')}}</h1>
@@ -76,7 +76,7 @@
       <h2>&emsp;&emsp;0</h2>
       <h2>&emsp;&emsp;{{number_format($item->cod_amount)}}</h2>
       <h2>&emsp;&emsp;{{number_format($item->insur_amount)}}</h2>
-      <h2>&emsp;&emsp;0</h2>
+      <h2>&emsp;&emsp;{{number_format($item->pack_amount)}}</h2>
       <h2>&emsp;&emsp;{{number_format($item->amount + $item->cod_amount + $item->insur_amount)}}</h2>
     </div>
     <div class="col-2">
@@ -105,7 +105,7 @@
       <br>
     </div>
   </div><!-- End Row -->
-
+  <br><br><br><br>
 </div>
 @endforeach
   

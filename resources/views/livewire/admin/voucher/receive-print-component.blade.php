@@ -46,7 +46,7 @@
       <h1>{{__('lang.customer_receive')}}</h1>
       <h1>&emsp;&emsp; {{$receive->customername_receive->name}}</h1>
       <h1>&emsp;&emsp; {{$receive->customername_receive->phone}}</h1>
-      <h1>&emsp;&emsp; {{$receive->branch_receive_name->company_name_la}} / {{__('lang.villages')}} {{$receive->branch_receive_name->villname->name}}</h1>
+      <h1>&emsp;&emsp; {{$receive->branch_receive_name->company_name_la}} @if(!empty($receive->customername_receive->vil_id)) / {{__('lang.villages')}} {{$receive->customername_receive->villname->name}} @endif</h1>
     </div>
   </div>
 </div> <!-- End Div Scope -->
@@ -54,6 +54,10 @@
   <div class="row">
     <div class="col-6">
       <h2>&emsp;&emsp;{{__('lang.qty')}}</h2>
+      @if($count_mtl == 1)
+      <h2>&emsp;&emsp;{{__('lang.size')}}</h2>
+      <h2>&emsp;&emsp;{{__('lang.weigh')}}</h2>
+      @endif
       <h2>&emsp;&emsp;{{__('lang.amount_fak')}}</h2>
       <h2>&emsp;&emsp;{{__('lang.innork_fak')}}</h2>
       <h2>&emsp;&emsp;COD</h2>
@@ -62,16 +66,20 @@
       <h2>&emsp;&emsp;{{__('lang.sum')}}</h2>
     </div>
     <div class="col-4" style="text-align: right">
-      <h2>&emsp;&emsp;{{$count_mtl}}/{{$count_mtl}}</h2>
+      <h2>&emsp;&emsp;{{$count_mtl}}</h2>
+      @if($count_mtl == 1)
+      <h2>&emsp;&emsp;{{$mtl->large + $mtl->height + $mtl->longs}}</h2>
+      <h2>&emsp;&emsp;{{$mtl->weigh}}</h2>
+      @endif
       <h2>&emsp;&emsp;{{number_format($receive->amount)}}</h2>
       <h2>&emsp;&emsp; 0</h2>
       <h2>&emsp;&emsp;{{number_format($receive->cod_amount)}}</h2>
       <h2>&emsp;&emsp;{{number_format($receive->insur_amount)}}</h2>
-      <h2>&emsp;&emsp;0</h2>
+      <h2>&emsp;&emsp;{{number_format($receive->pack_amount)}}</h2>
       <h2>&emsp;&emsp;{{number_format($receive->amount + $receive->cod_amount + $receive->insur_amount)}}</h2>
     </div>
     <div class="col-2">
-      <h2>&emsp;&emsp;</h2>
+      <h2>&emsp;&emsp;{{__('lang.product')}}</h2>
       <h2>&emsp;&emsp;{{__('lang.lak')}}</h2>
       <h2>&emsp;&emsp;{{__('lang.lak')}}</h2>
       <h2>&emsp;&emsp;{{__('lang.lak')}}</h2>
@@ -93,7 +101,9 @@
     <h2  style="font-size: 48px"><b>020 56717773</b></h2>
   </div>
 </div>
-
+@if($count_mtl != 1)
+  <br> <br>
+@endif
 </div>
 
   @push('scripts')
