@@ -14,6 +14,7 @@ use App\Models\Settings\District;
 use App\Models\Settings\Distance;
 use App\Models\Settings\Village;
 use App\Models\Settings\GoodsType;
+use App\Models\Settings\packet;
 use App\Models\Condition\ProductType;
 use App\Models\Settings\CalculatePrice;
 use App\Models\Transaction\Matterail;
@@ -44,6 +45,7 @@ class CreateReceiveTransactionComponent extends Component
     public $districts = [];
     public $villages = [];
     public $ProductType = [];
+    public $pack= "0|0";
 
     public function mount()
     {
@@ -74,13 +76,14 @@ class CreateReceiveTransactionComponent extends Component
         $provinces = Province::where('del', 1)->get();
         $districtss = District::orderBy('id','desc')->get();
         $villagess = Village::orderBy('id','desc')->get();
+        $packet = Packet::select('id','name','price')->where('status',1)->orderBy('id','desc')->get();
 
         $dist = District::where('del', 1)->get();
         $vill = Village::where('del', 1)->get();
         $goodstype = GoodsType::where('status',1)->get();
         $ew=Ewallet::select('id','acno','balance')->where('branch_id',Auth()->user()->branchname->id)->where('status','N')->first();
         $matterails = Matterail::select('matterails.id as id','matterails.code','matterails.large','matterails.height','matterails.longs','matterails.weigh','matterails.currency_code',
-                                        'matterails.amount','matterails.cod_amount','matterails.insur_amount','matterails.paid_type','goods_types.name as gname','product_types.name as pname','calculate_prices.name as calname')
+                                        'matterails.amount','matterails.cod_amount','matterails.insur_amount','matterails.pack_amount','matterails.paid_type','goods_types.name as gname','product_types.name as pname','calculate_prices.name as calname')
                     ->join('goods_types','matterails.goods_id','=','goods_types.id')
                     ->join('product_types','matterails.product_type_id','=','product_types.id')
                     ->join('calculate_prices','matterails.cal_price_id','=','calculate_prices.id')
@@ -122,7 +125,7 @@ class CreateReceiveTransactionComponent extends Component
          })->where('customers.cus_type_id', 'like', '%' .$this->search_by_cat. '%')->paginate(8);
 
 
-        return view('livewire.admin.transaction.create-receive-transaction-component',compact('customertypes','customers','branch','provinces','districtss','villagess','dist','vill','goodstype','distances','matterails','ew'))
+        return view('livewire.admin.transaction.create-receive-transaction-component',compact('customertypes','customers','branch','provinces','districtss','villagess','dist','vill','goodstype','distances','matterails','ew','packet'))
         ->layout('layouts.base');
     }
 
@@ -194,14 +197,17 @@ class CreateReceiveTransactionComponent extends Component
         
                 if($this->v<=280 && $this->weigh<=30)
                 {
+                 
 
                    $find_price = CalculatePrice::
                                 selectRaw('max(id) as id,max(price) AS price') 
                                 ->where(function ($query){ $query->where('min_val','<=',$this->weigh)->orWhere('max_val','<=',$this->v); })
-                                ->where('cal_type_id',1)->where('status',1)->where('del',1)
+                                ->where('cal_type_id',1)
+                                ->where('distance_id',$this->dist_id)
+                                ->where('status',1)->where('del',1)
                                 ->first();
-                       
-                        if(!empty($find_price))
+                  
+                        if($find_price->id !=null)
                         {
                             $this->cal_price = $find_price->price;
                             $this->fun_id= $find_price->id;
@@ -213,8 +219,8 @@ class CreateReceiveTransactionComponent extends Component
                 elseif($this->v<=280 && $this->weigh>30)
                 {
                     $find_price=CalculatePrice::select('id','price')->where('min_val','<',$this->weigh)->where('max_val','>=',$this->weigh)
-                                                ->where('status',1)->where('cal_type_id',2)->where('del',1)->first();
-                    if(!empty($find_price))
+                                                ->where('status',1)->where('cal_type_id',2)->where('distance_id',$this->dist_id)->where('del',1)->first();
+                    if($find_price->id !=null)
                     {
                         $this->cal_price = $find_price->price * $this->weigh;
                         $this->fun_id= $find_price->id;
@@ -227,8 +233,8 @@ class CreateReceiveTransactionComponent extends Component
                      
                      $this->w_price =($this->large * $this->height * $this->longs)/5000;
                      $find_price=CalculatePrice::select('id','price')->where('min_val','<',$this->w_price)->where('max_val','>=',$this->w_price)
-                                                        ->where('status',1)->where('cal_type_id',3)->where('del',1)->first();
-                     if(!empty($find_price))
+                                                        ->where('status',1)->where('cal_type_id',3)->where('distance_id',$this->dist_id)->where('del',1)->first();
+                     if($find_price->id !=null)
                      {
                          $this->cal_price = $find_price->price * $this->w_price;
                          $this->fun_id= $find_price->id;
@@ -290,6 +296,7 @@ class CreateReceiveTransactionComponent extends Component
 
     public function rec_matterail()
     {
+        
 
         if ((($this->r2=='COD') || ($this->insur=='TRUE')) && ($this->amount==0))
         {
@@ -319,7 +326,9 @@ class CreateReceiveTransactionComponent extends Component
             else
             {
                 $matterail->insur_amount=0;
-            }       
+            }   
+            $matterail->pack_id = explode("|",$this->pack)[0];
+            $matterail->pack_amount = explode("|",$this->pack)[1];    
             $matterail->paid_type = $this->piadtype;
             $matterail->paid_by = $this->piadtype;
             $matterail->branch_id = Auth()->user()->branchname->id;
@@ -341,7 +350,9 @@ class CreateReceiveTransactionComponent extends Component
             else
             {
                 $lis_m->insur_amount=0;
-            }       
+            }    
+            $lis_m->pack_id = explode("|",$this->pack)[0];
+            $lis_m->pack_amount = explode("|",$this->pack)[1];      
             $lis_m->paid_type = $this->piadtype;
             $lis_m->paid_by = $this->piadtype;
             $lis_m->branch_id = Auth()->user()->branchname->id;
@@ -350,6 +361,8 @@ class CreateReceiveTransactionComponent extends Component
             $lis_m->save();
             $this-> resetform(); 
             $this->isDisabled1 = "Disabled";
+
+            $this->pack="0|0";
 
         }    
         
@@ -396,7 +409,7 @@ class CreateReceiveTransactionComponent extends Component
 
 
         $chekm= DB::table('matterails')
-                    ->select(DB::raw('count(receive_id) as c, sum(amount) as m, sum(cod_amount) as cm, sum(insur_amount) as ins'))
+                    ->select(DB::raw('count(receive_id) as c, sum(amount) as m, sum(cod_amount) as cm, sum(insur_amount) as ins,sum(pack_amount) as pkamt'))
                     ->where('receive_id','=',$this->code)
                     ->groupBy('receive_id')
                     ->first();
@@ -430,6 +443,7 @@ class CreateReceiveTransactionComponent extends Component
             $savebill->insur=$this->insur;
             $savebill->insur_rate=$this->in_rate;
             $savebill->insur_amount=$chekm->ins;
+            $savebill->pack_amount=$chekm->pkamt;
             $savebill->paid_by= $this->piadtype;
             $savebill->creator_id=  Auth()->user()->id;
             $savebill->branch_create_id = Auth()->user()->branchname->id ;

@@ -12,7 +12,7 @@ class ReceiveTransaction extends Model
     //protected $fillable = ['code','branch_send','customer_send','branch_receive','customer_receive','goods_type_id','goods_name','coculator_type_id','unit','amount',
    // 'image','payment_type_id','payment_id','shipping_id','creator_id','note','branch_create_id'];
 
-   protected $fillable = ['id','code','type','valuedt','branch_send','customer_send','branch_receive','customer_receive','pro_id','dis_id','vil_id','currency_code','amount','service_type','cod_amount','insur','insur_rate','insur_amount','paid_by','image','creator_id','branch_create_id','deliver_id','deliver_date','note','status'];
+   protected $fillable = ['id','code','type','valuedt','branch_send','customer_send','branch_receive','customer_receive','pro_id','dis_id','vil_id','currency_code','amount','service_type','cod_amount','insur','insur_rate','insur_amount','pack_amount','paid_by','image','creator_id','branch_create_id','deliver_id','deliver_date','note','status'];
 
     public function branch_sends()
     {
