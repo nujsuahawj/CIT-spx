@@ -96,6 +96,7 @@
                             @error('branch_id') <span style="color: red" class="error">{{ $message }}</span> @enderror
                         </div>
                       </div>
+            
                       <!-- ຜູ້ຝາກເຄື່ອງ-->
                        <div class="col-sm-4 callout callout-info">
                         <div class="form-group">   
@@ -165,7 +166,7 @@
                                       <label for="radio1">{{__('lang.normal')}}</label>
                                     </div>
                                     <div class="icheck-success d-inline col-sm-3" >
-                                      <input wire:model="r2" type="radio" id="radio2" name="r2" value="COD" {{$isDisabled1}} @if(empty($ew->id)) disabled @endif>
+                                      <input wire:model="r2" type="radio" id="radio2" name="r2" value="COD" {{$isDisabled1}}>
                                       <label for="radio2">{{__('lang.cod')}}</label>
                                     </div>        
                                 </div> 
@@ -178,53 +179,6 @@
                                 </div>
                             </div>
                       </div>
-                    </div>
-                    
-                    <hr>
-
-                    <div class="row">
-                       <div>
-                         <label>{{__('lang.recieve_more_info')}}:</label>
-                       </div>
-                    </div>
-
-                    <div class="row">
-                      <div class="col-md-4">
-                          <div class="form-group" wire:ignore>
-                              <label>{{__('lang.provincename')}}</label>
-                              <select wire:model="pro_id" class="form-control" id="selectProvince">
-                                <option value="" selected>{{__('lang.select')}}</option>
-                                  @foreach($provinces as $item)
-                                      <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                  @endforeach
-                              </select>
-                              @error('pro_id') <span style="color: red" class="error">{{ $message }}</span> @enderror
-                          </div>    
-                      </div>
-                      <div class="col-md-4">
-                          <div class="form-group" wire:ignore>
-                              <label>{{__('lang.districtname')}}</label>
-                              <select wire:model="dis_id" class="form-control" id="selectDistrict">
-                                <option value="" selected>{{__('lang.select')}}</option>
-                                  @foreach($districtss as $item)
-                                      <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                  @endforeach
-                              </select>
-                              @error('dis_id') <span style="color: red" class="error">{{ $message }}</span> @enderror
-                          </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group" wire:ignore>
-                            <label>{{__('lang.villagename')}}</label>
-                            <select wire:model="vil_id" class="form-control" id="selectVillage">
-                              <option value="" selected>{{__('lang.select')}}</option>
-                                @foreach($villagess as $item)
-                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                @endforeach
-                            </select>
-                            @error('vil_id') <span style="color: red" class="error">{{ $message }}</span> @enderror
-                        </div>
-                      </div>   
                     </div>
                     
                     <div class="row" style="display: none">
@@ -582,6 +536,45 @@
             </div>
           </div>
 
+                    <div class="row">
+                      <div class="col-md-4">
+                          <div class="form-group" wire:ignore>
+                              <label>{{__('lang.provincename')}}</label>
+                              <select wire:model="pro_id_sd" class="form-control" id="selectProvince">
+                                <option value="" selected>{{__('lang.select')}}</option>
+                                  @foreach($provinces as $item)
+                                      <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                  @endforeach
+                              </select>
+                            
+                          </div>    
+                      </div>
+                      <div class="col-md-4">
+                          <div class="form-group">
+                              <label>{{__('lang.districtname')}}</label>
+                              <select wire:model="dis_id_sd" class="form-control">
+                                <option value="" selected>{{__('lang.select')}}</option>
+                                  @foreach($districts as $item)
+                                      <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                  @endforeach
+                              </select>
+                            
+                          </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                            <label>{{__('lang.villagename')}}</label>
+                            <select wire:model="vil_id_sd" class="form-control">
+                              <option value="" selected>{{__('lang.select')}}</option>
+                                  @foreach($villages as $item)
+                                      <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                  @endforeach
+                            </select>
+                        
+                        </div>
+                      </div>   
+                    </div>
+
           <div class="row">
             <div class="col-md-12">
               <div class="form-group">
@@ -654,6 +647,45 @@
           </div>
 
           <div class="row">
+                      <div class="col-md-4">
+                          <div class="form-group" wire:ignore>
+                              <label>{{__('lang.provincename')}}</label>
+                              <select wire:model="pro_id_rv" class="form-control" id="province">
+                                <option value="" selected>{{__('lang.select')}}</option>
+                                  @foreach($provinces as $item)
+                                      <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                  @endforeach
+                              </select>
+                            
+                          </div>    
+                      </div>
+                      <div class="col-md-4">
+                          <div class="form-group">
+                              <label>{{__('lang.districtname')}}</label>
+                              <select wire:model="dis_id_rv" class="form-control">
+                                <option value="" selected>{{__('lang.select')}}</option>
+                                  @foreach($districts as $item)
+                                      <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                  @endforeach
+                              </select>
+                            
+                          </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                            <label>{{__('lang.villagename')}}</label>
+                            <select wire:model="vil_id_rv" class="form-control">
+                              <option value="" selected>{{__('lang.select')}}</option>
+                                  @foreach($villages as $item)
+                                      <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                  @endforeach
+                            </select>
+                        
+                        </div>
+                      </div>   
+                    </div>
+
+          <div class="row">
             <div class="col-md-12">
               <div class="form-group">
                 <label>{{__('lang.note')}}</label>
@@ -718,38 +750,15 @@
       $('#selectProvince').select2();
       $('#selectProvince').on('change', function (e) {
           var data = $('#selectProvince').select2("val");
-          @this.set('pro_id', data);
-      });
-   
-      $('#selectDistrict').select2();
-      $('#selectDistrict').on('change', function (e) {
-          var data = $('#selectDistrict').select2("val");
-          @this.set('dis_id', data);
+          @this.set('pro_id_sd', data);
       });
 
-      $('#selectVillage').select2();
-      $('#selectVillage').on('change', function (e) {
-          var data = $('#selectVillage').select2("val");
-          @this.set('vil_id', data);
+      $('#province').select2();
+      $('#province').on('change', function (e) {
+          var data = $('#province').select2("val");
+          @this.set('pro_id_rv', data);
       });
 
-      $('#pro').select2();
-      $('#pro').on('change', function (e) {
-          var data = $('#pro').select2("val");
-          @this.set('pros_id', data);
-      });
-   
-      $('#dis').select2();
-      $('#dis').on('change', function (e) {
-          var data = $('#dis').select2("val");
-          @this.set('diss_id', data);
-      });
-
-      $('#vil').select2();
-      $('#vil').on('change', function (e) {
-          var data = $('#vil').select2("val");
-          @this.set('vils_id', data);
-      });
     });
 
 

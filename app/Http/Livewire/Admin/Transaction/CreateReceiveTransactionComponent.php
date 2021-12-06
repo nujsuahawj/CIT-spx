@@ -46,16 +46,17 @@ class CreateReceiveTransactionComponent extends Component
     public $villages = [];
     public $ProductType = [];
     public $pack= "0|0";
+    public $pro_id_sd, $dis_id_sd, $vil_id_sd, $pro_id_rv, $dis_id_rv, $vil_id_rv;
 
     public function mount()
     {
         $branch_code = auth()->user()->branchname->id;
-        $max = ReceiveTransaction::where('branch_create_id',auth()->user()->branchname->id)->count('id');
+        $max = ReceiveTransaction::count('id');
         if(!empty($max)){
             $sum = $max+1;
-            $this->code =  $branch_code.date('ymd').$sum;
+            $this->code =  '000'.$sum;
         }else{
-            $this->code =  $branch_code.auth()->user()->id.date('ymd').'1';
+            $this->code =  '000'.'1';
         }
 
         $max_cus = Customer::select('id')->count('id');
@@ -98,12 +99,28 @@ class CreateReceiveTransactionComponent extends Component
                            ->where('branches.id','!=',$branchid)->get();
 
 
-        if(!empty($this->pro_id)){
-            $this->districts = District::where('pro_id', $this->pro_id)->get();
+        // if(!empty($this->pro_id)){
+        //     $this->districts = District::where('pro_id', $this->pro_id)->get();
+        // }
+
+        // if(!empty($this->dis_id)){
+        //     $this->villages = Village::where('dis_id', $this->dis_id)->get();
+        // }
+
+        if(!empty($this->pro_id_sd)){
+            $this->districts = District::where('pro_id', $this->pro_id_sd)->get();
         }
 
-        if(!empty($this->dis_id)){
-            $this->villages = Village::where('dis_id', $this->dis_id)->get();
+        if(!empty($this->dis_id_sd)){
+            $this->villages = Village::where('dis_id', $this->dis_id_sd)->get();
+        }
+
+        if(!empty($this->pro_id_rv)){
+            $this->districts = District::where('pro_id', $this->pro_id_rv)->get();
+        }
+
+        if(!empty($this->dis_id_rv)){
+            $this->villages = Village::where('dis_id', $this->dis_id_rv)->get();
         }
 
         if(!empty($this->goods_type_id)){
@@ -112,7 +129,7 @@ class CreateReceiveTransactionComponent extends Component
         }
 
         if($this->r2=='COD' || $this->insur=='TRUE'){ $this->hide_cod=''; } else{ $this->hide_cod='disabled'; $this->amount=0;}
-        $customertypes = CustomerType::all();
+        $customertypes = CustomerType::orderBy('id','desc')->get();
         $customers = Customer::select('customers.*','provinces.name as proname','districts.name as disname','villages.name as vilname')
         ->leftJoin('provinces', 'customers.pro_id', '=', 'provinces.id')
         ->leftJoin('districts', 'customers.dis_id', '=', 'districts.id')
@@ -122,7 +139,8 @@ class CreateReceiveTransactionComponent extends Component
          $query->where('customers.code', 'like', '%' .$this->search_cus. '%')
         ->orWhere('customers.name', 'like', '%' .$this->search_cus. '%')
         ->orWhere('customers.phone', 'like', '%' .$this->search_cus. '%');
-         })->where('customers.cus_type_id', 'like', '%' .$this->search_by_cat. '%')->paginate(8);
+         })->where('customers.cus_type_id', 'like', '%' .$this->search_by_cat. '%')
+        ->orderBy('customers.id','desc')->paginate(8);
 
 
         return view('livewire.admin.transaction.create-receive-transaction-component',compact('customertypes','customers','branch','provinces','districtss','villagess','dist','vill','goodstype','distances','matterails','ew','packet'))
@@ -144,6 +162,9 @@ class CreateReceiveTransactionComponent extends Component
             $this->rcid = $singleData->id;
             $this->rcname = $singleData->name;
             $this->rcphone=$singleData->phone;
+            $this->pro_id = $singleData->pro_id;
+            $this->dis_id = $singleData->dis_id;
+            $this->vil_id = $singleData->vil_id;
         }
 
         $this->dispatchBrowserEvent('hide-modal-cus-info');
@@ -398,12 +419,22 @@ class CreateReceiveTransactionComponent extends Component
     public function savebill()
     {
         $this->validate([
-            'code'=>'required|unique:matterails','cuscode'=>'required','cusname'=>'required','cusphone'=>'required','rcname'=>'required','rcphone'=>'required',
-            'pro_id'=>'required','dis_id'=>'required','vil_id'=>'required','branch_id'=>'required'
+            'code'=>'required|unique:matterails',
+            'cuscode'=>'required',
+            'cusname'=>'required',
+            'cusphone'=>'required',
+            'rcname'=>'required',
+            'rcphone'=>'required',
+            'branch_id'=>'required'
         ],[
-            'code.required'=>'ລະຫັດບິນບໍ່ສາມາດເປັນຄ່າຫວ່າງ','code.unique'=>'ລະຫັດບິນຊໍ້າກັນ','cuscode.required'=>'ລະຫັດລູກຄ້າບໍ່ສາມາດເປັນຄ່າຫວ່າງ','cusname.required'=>'ຊື່ລູກຄ້າບໍ່ສາມາດເປັນຄ່າຫວ່າງ',
-            'cusphone.required'=>'ເບີໂທລູກຄ້າບໍ່ສາມາດເປັນຄ່າຫວ່າງ','rcname.required'=>'ກະລຸນາເລືອກຜູ້ຮັບເຄື່ອງ','rcphone.required'=>'ເບີໂທຜູ້ຮັບເຄື່ອງບໍ່ສາມາດເປັນຄ່າຫວ່າງ',
-            'pro_id.required'=>'ເລືອກແຂວງທີ່ຢູ່ຜູ້ຮັບເຄື່ອງ','dis_id.required'=>'ເລືອກເມືອງທີ່ຢູ່ຜູ້ຮັບເຄື່ອງ','vil_id.required'=>'ເລືອກບ້ານທີ່ຢູ່ຜູ້ຮັບເຄື່ອງ','branch_id.required'=>'ເລອກສາຂາປາຍທາງ'
+            'code.required'=>'ລະຫັດບິນບໍ່ສາມາດເປັນຄ່າຫວ່າງ',
+            'code.unique'=>'ລະຫັດບິນຊໍ້າກັນ',
+            'cuscode.required'=>'ລະຫັດລູກຄ້າບໍ່ສາມາດເປັນຄ່າຫວ່າງ',
+            'cusname.required'=>'ຊື່ລູກຄ້າບໍ່ສາມາດເປັນຄ່າຫວ່າງ',
+            'cusphone.required'=>'ເບີໂທລູກຄ້າບໍ່ສາມາດເປັນຄ່າຫວ່າງ',
+            'rcname.required'=>'ກະລຸນາເລືອກຜູ້ຮັບເຄື່ອງ',
+            'rcphone.required'=>'ເບີໂທຜູ້ຮັບເຄື່ອງບໍ່ສາມາດເປັນຄ່າຫວ່າງ',
+            'branch_id.required'=>'ເລອກສາຂາປາຍທາງ'
         ]);
 
 
@@ -569,6 +600,9 @@ class CreateReceiveTransactionComponent extends Component
         $customer->phone = $this->phonesend;
         $customer->bod = $this->bodsend;
         $customer->cus_type_id = $this->cus_type_id_send;
+        $customer->pro_id = $this->pro_id_sd;
+        $customer->dis_id = $this->dis_id_sd;
+        $customer->vil_id = $this->vil_id_sd;
         $customer->branch_id = auth()->user()->branchname->id;
         $customer->note = $this->notesend;
         $customer->save();
@@ -605,6 +639,9 @@ class CreateReceiveTransactionComponent extends Component
         $customer->phone = $this->phone;
         $customer->bod = $this->bod;
         $customer->cus_type_id = $this->cus_type_id;
+        $customer->pro_id = $this->pro_id_rv;
+        $customer->dis_id = $this->dis_id_rv;
+        $customer->vil_id = $this->vil_id_rv;
         $customer->branch_id = auth()->user()->branchname->id;
         $customer->note = $this->note;
         $customer->save();
@@ -612,6 +649,9 @@ class CreateReceiveTransactionComponent extends Component
         $this->rcid = $customer->id;
         $this->rcname = $this->name;
         $this->rcphone = $this->phone;
+        $this->pro_id = $this->pro_id_rv;
+        $this->dis_id = $this->dis_id_rv;
+        $this->vil_id = $this->vil_id_rv;
         
         $this->dispatchBrowserEvent('hide-modal-add-customer');
         $this->emit('alert', ['type' => 'success', 'message' => 'ເພີ່ມຂໍ້ມູນຂໍ້ມູນສຳເລັດ!']);
