@@ -21,6 +21,7 @@ use App\Models\Settings\PaymentType;
 use App\Models\Settings\Tax; 
 use App\Models\Condition\Vihicle; 
 use App\Models\Condition\VihicleType; 
+use App\Models\Condition\Customer;
 use App\Models\Transaction;
 use App\Models\Settings\Packet;
 
@@ -37,7 +38,13 @@ class SettingApiController extends Controller
     public function getCustomers()
     {
         return response([
-            'data'=> User::select('id','code','name','phone','email','address','branch_id','role_id')->where('del',1)->where('role_id',6)->get()
+            'data'=> Customer::select('id','name','phone','pro_id','dis_id','vil_id')->orderBy('id','desc')->get()
+        ],200);
+    }
+    public function getSearchCustomers($name)
+    {
+        return response([
+            'data'=> Customer::select('id','name','phone','pro_id','dis_id','vil_id')->where('phone',$name)->orderBy('id','desc')->get()
         ],200);
     }
     //ເງື່ອນໄຂລາຄາເປັນ Kg

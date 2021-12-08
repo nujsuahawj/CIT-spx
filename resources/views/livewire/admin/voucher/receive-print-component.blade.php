@@ -65,7 +65,7 @@
       <h2>&emsp;&emsp;{{__('lang.packing')}}</h2>
       <h2>&emsp;&emsp;{{__('lang.sum')}}</h2>
     </div>
-    <div class="col-4" style="text-align: right">
+    <div class="col-3" style="text-align: right">
       <h2>&emsp;&emsp;{{$count_mtl}}</h2>
       @if($count_mtl == 1)
       <h2>&emsp;&emsp;{{$mtl->large + $mtl->height + $mtl->longs}}</h2>
@@ -78,7 +78,7 @@
       <h2>&emsp;&emsp;{{number_format($receive->pack_amount)}}</h2>
       <h2>&emsp;&emsp;{{number_format($receive->amount + $receive->pack_amount + $receive->cod_amount + $receive->insur_amount)}}</h2>
     </div>
-    <div class="col-2">
+    <div class="col-3">
       <h2>&emsp;&emsp;{{__('lang.list')}}</h2>
       <h2>&emsp;&emsp;Cm</h2>
       <h2>&emsp;&emsp;Kg</h2>

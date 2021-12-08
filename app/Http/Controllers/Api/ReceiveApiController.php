@@ -509,7 +509,7 @@ class ReceiveApiController extends Controller
             $savebill->service_type = $request->r2;
             $savebill->cod_amount = $chekm->cm;
             $savebill->insur = $request->insur;
-            $savebill->insur_rate = $request->in_rate;
+            $savebill->insur_rate = 0.3;
             $savebill->insur_amount = $chekm->ins;
             $savebill->pack_amount = $chekm->pkamt;
             $savebill->paid_by= $request->piadtype;
