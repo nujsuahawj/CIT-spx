@@ -4,13 +4,25 @@ namespace App\Http\Controllers\Api\Admin\Settings;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User; use App\Models\Settings\Role;
-use App\Models\Settings\CalculatorPriceKg; use App\Models\Settings\CalculatorPriceOther;
-use App\Models\Settings\Village; use App\Models\Settings\District; use App\Models\Settings\Province;
-use App\Models\Settings\Dividend; use App\Models\Settings\Cod; use App\Models\Settings\Exchange;
-use App\Models\Settings\GoodsType; use App\Models\Settings\ProductType;
-use App\Models\Settings\Payment; use App\Models\Settings\PaymentType; use App\Models\Settings\Tax; 
-use App\Models\Condition\Vihicle; use App\Models\Condition\VihicleType; use App\Models\Transaction;; 
+use App\Models\User; 
+use App\Models\Settings\Role;
+use App\Models\Settings\CalculatorPriceKg; 
+use App\Models\Settings\CalculatorPriceOther;
+use App\Models\Settings\Village; 
+use App\Models\Settings\District; 
+use App\Models\Settings\Province;
+use App\Models\Settings\Dividend; 
+use App\Models\Settings\Cod; 
+use App\Models\Settings\Exchange;
+use App\Models\Settings\GoodsType; 
+use App\Models\Settings\ProductType;
+use App\Models\Settings\Payment; 
+use App\Models\Settings\PaymentType; 
+use App\Models\Settings\Tax; 
+use App\Models\Condition\Vihicle; 
+use App\Models\Condition\VihicleType; 
+use App\Models\Transaction;
+use App\Models\Settings\Packet;
 
 class SettingApiController extends Controller
 {
@@ -166,5 +178,17 @@ class SettingApiController extends Controller
             'data'=> VihicleType::select('id','name')->get()
         ],200);
     }
-
+    //ແພັກເຄື່ອງ
+    public function getPacking()
+    {
+        return response([
+            'data'=> packet::select('id','name')->get()
+        ],200);
+    }
+    public function getPackingById($id)
+    {
+        return response([
+            'data'=> packet::find($id)
+        ],200);
+    }
 }

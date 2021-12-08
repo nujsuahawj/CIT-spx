@@ -24,6 +24,7 @@ class BillReceiveResource extends JsonResource
             'branch_send_phone'=> $this->receivename->branch_sends->phone,  
             'cus_receive'=> $this->receivename->customername_receive->name, 
             'cus_receive_phone'=> $this->receivename->customername_receive->phone,
+            'branch_receive_code'=> $this->receivename->branch_receive_name->code, 
             'branch_receive'=> $this->receivename->branch_receive_name->company_name_la, 
             'branch_receive_phone'=> $this->receivename->branch_receive_name->phone, 
             'branch_receive_vilname'=> $this->receivename->branch_receive_name->villname->name, 
@@ -32,8 +33,9 @@ class BillReceiveResource extends JsonResource
             'amount' => $this->amount,   
             'cod_amount' => $this->cod_amount,   
             'insur_amount' => $this->insur_amount,   
-            'sum' => $this->amount + $this->cod_amount + $this->insur_amount,
-            'created_date'=> date('d/m/Y h:i:s', strtotime($this->receivename->created_at)), 
+            'pack_amount' => $this->pack_amount,   
+            'sum' => $this->amount + $this->pack_amount + $this->cod_amount + $this->insur_amount,
+            'created_date'=> date('d/m/Y H:i:s', strtotime($this->receivename->created_at)), 
         ];
     }
 }

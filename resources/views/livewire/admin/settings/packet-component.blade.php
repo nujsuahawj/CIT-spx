@@ -3,12 +3,12 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1>{{__('lang.packet')}}</h1>
+              <h1>{{__('lang.packing')}}</h1>
             </div>
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">{{__('lang.home')}}</a></li>
-                <li class="breadcrumb-item active">{{__('lang.packet')}}</li>
+                <li class="breadcrumb-item active">{{__('lang.packing')}}</li>
               </ol>
             </div>
           </div>
@@ -43,21 +43,21 @@
                              <div class="col-md-4">
                                 <div class="form-group">
                                     <label>{{__('lang.large')}} (Cm)</label>
-                                    <input wire:model="largs" type="number" class="form-control @error('largs') is-invalid @enderror" placeholder="{{__('lang.larg')}}">
+                                    <input wire:model="largs" type="number" class="form-control @error('largs') is-invalid @enderror" placeholder="{{__('lang.large')}}">
                                     @error('largs') <span style="color: red" class="error">{{ $message }}</span> @enderror
                                 </div>
                              </div>
                              <div class="col-md-4">
                                 <div class="form-group">
                                     <label>{{__('lang.height')}} (Cm)</label>
-                                    <input wire:model="hieghs" type="number" class="form-control @error('hieghs') is-invalid @enderror" placeholder="{{__('lang.hiegh')}}">
+                                    <input wire:model="hieghs" type="number" class="form-control @error('hieghs') is-invalid @enderror" placeholder="{{__('lang.height')}}">
                                     @error('hieghs') <span style="color: red" class="error">{{ $message }}</span> @enderror
                                 </div>
                              </div>
                              <div class="col-md-4">
                                 <div class="form-group">
                                     <label>{{__('lang.longs')}} (Cm)</label>
-                                    <input wire:model="longs" type="number" class="form-control @error('longs') is-invalid @enderror" placeholder="{{__('lang.long')}}">
+                                    <input wire:model="longs" type="number" class="form-control @error('longs') is-invalid @enderror" placeholder="{{__('lang.longs')}}">
                                     @error('longs') <span style="color: red" class="error">{{ $message }}</span> @enderror
                                 </div>
                              </div>
@@ -115,7 +115,7 @@
                     <div class="card-header">
                         <div class="row">
                           <div class="col-md-6">
-                            <label>{{__('lang.packet')}}</label>
+                            <label>{{__('lang.packing')}}</label>
                           </div>
       
                            <div class="col-md-3">           
