@@ -607,6 +607,6 @@ return [
     'amount_fak'=>'ຄ່າຝາກພາຍໃນ',
     'inlao_fak'=>'ຄ່າຝາກພາຍໃນປະເທດ',
     'innork_fak'=>'ຄ່າຝາກຈາກຕ່າງປະເທດ',
-    'packing'=>'ຄ່າ Packing',
+    'packing'=>'ຄ່າແພັກເຄື່ອງ',
     'tel_help'=>'ສາຍດ່ວນ',
 ];

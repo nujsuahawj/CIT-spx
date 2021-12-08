@@ -112,12 +112,12 @@
                                   </button>
                                   <div class="dropdown-menu" role="menu">
                                   <a class="dropdown-item" href="javascript:void(0)" wire:click="DetailReceive({{$item->id}})"><i class="fas fa-info-circle text-info"></i> {{__('lang.detail')}}</a>
-                                  @if($item->status == 'N')
+                                  @if($item->status == 'N' || auth()->user()->rolename->name == 'admin')
                                     <a class="dropdown-item" href="javascript:void(0)" wire:click="showDestroy({{$item->id}})"><i class="fas fa fa-times-circle text-danger"></i> {{__('lang.reject')}}</a>
                                   @endif
-                                  @if($item->status == 'N')
-                                  <a class="dropdown-item" href="{{route('voucher.printreceive',$item->code)}}"><i class="fas fa-print text-success"></i> {{__('lang.printreceive')}}</a>
-                                  <a class="dropdown-item" href="{{route('voucher.printmatterail',$item->code)}}"><i class="fas fa-print text-success"></i> {{__('lang.printmatterail')}}</a>
+                                  @if($item->status == 'N' || auth()->user()->rolename->name == 'admin')
+                                    <a class="dropdown-item" href="{{route('voucher.printreceive',$item->code)}}"><i class="fas fa-print text-success"></i> {{__('lang.printreceive')}}</a>
+                                    <a class="dropdown-item" href="{{route('voucher.printmatterail',$item->code)}}"><i class="fas fa-print text-success"></i> {{__('lang.printmatterail')}}</a>
                                   @endif
                                   </div>
                                 </div>

@@ -33,7 +33,7 @@
                   <li><a href="{{route('admin.dividend')}}" class="dropdown-item">{{__('lang.dividend')}}</a></li>
                   <li><a href="{{route('admin.insurance')}}" class="dropdown-item">{{__('lang.insurance')}}</a></li>
                   <li><a href="{{route('admin.vat')}}" class="dropdown-item">{{__('lang.tax')}}</a></li>
-                  
+                  <li><a href="{{route('admin.packet')}}" class="dropdown-item">{{__('lang.packing')}}</a></li>
                   <li><a href="{{route('admin.goodstype')}}" class="dropdown-item">{{__('lang.goods_type')}}</a></li>
                   <li><a href="{{route('admin.producttype')}}" class="dropdown-item">{{__('lang.product_type')}}</a></li>
                   <li><a href="{{route('admin.calculateprice')}}" class="dropdown-item">{{__('lang.calculateprice')}}</a></li>

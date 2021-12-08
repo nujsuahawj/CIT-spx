@@ -35,7 +35,7 @@ Route::get('/settings/{id}/district', [App\Http\Controllers\Api\Admin\Settings\S
 Route::get('/settings/province', [App\Http\Controllers\Api\Admin\Settings\SettingApiController::class, 'getProvince']);
 Route::get('/settings/{id}/province', [App\Http\Controllers\Api\Admin\Settings\SettingApiController::class, 'getProvinceById']);
 Route::get('/apireceive/searchorder/{name}', [App\Http\Controllers\Api\ReceiveApiController::class, 'search']);
-
+Route::get('/apireceive/maxIdReceive', [App\Http\Controllers\Api\ReceiveApiController::class, 'maxIdReceive']);
 
 Route::group(['middleware' => ['auth:sanctum']], function (){
     Route::get('/apiuser', [App\Http\Controllers\Api\AuthApiController::class, 'apiuser']);
@@ -47,9 +47,11 @@ Route::group(['middleware' => ['auth:sanctum']], function (){
     Route::post('/apireceive/order', [App\Http\Controllers\Api\ReceiveApiController::class, 'addOrder']);
     Route::delete('/apireceives/{id}/deleteorder', [App\Http\Controllers\Api\ReceiveApiController::class, 'destroyorder']);
     Route::get('/apireceive/detail', [App\Http\Controllers\Api\DetailReceiveApiController::class,'index']);
+    Route::get('/apireceive/count/{code}', [App\Http\Controllers\Api\ReceiveApiController::class, 'countIdMaterail']);
     Route::get('/apireceive/bill/{code}', [App\Http\Controllers\Api\ReceiveApiController::class, 'showbillreceive']);
-
-    
+    Route::post('/apireceive/postmaterail', [App\Http\Controllers\Api\ReceiveApiController::class, 'postMatterail']);
+    Route::get('/apireceive/billall/{code}', [App\Http\Controllers\Api\ReceiveApiController::class, 'showbillallreceive']);
+    Route::post('/apireceive/postreceive', [App\Http\Controllers\Api\ReceiveApiController::class, 'postReceiveTransaction']);
     
     //Callgoods
     Route::get('/callgoods', [App\Http\Controllers\Api\CallGoodsApiController::class,'index']);
@@ -61,7 +63,6 @@ Route::group(['middleware' => ['auth:sanctum']], function (){
     //Settings
     Route::get('/settings/customers', [App\Http\Controllers\Api\Admin\Settings\SettingApiController::class, 'getCustomers']);
     Route::get('/settings/roles', [App\Http\Controllers\Api\Admin\Settings\SettingApiController::class, 'getRoles']);
-    
     Route::get('/settings/dividend', [App\Http\Controllers\Api\Admin\Settings\SettingApiController::class, 'getDividend']);
     Route::get('/settings/cod', [App\Http\Controllers\Api\Admin\Settings\SettingApiController::class, 'getCod']);
     Route::get('/settings/exchange', [App\Http\Controllers\Api\Admin\Settings\SettingApiController::class, 'getExchange']);
@@ -74,4 +75,6 @@ Route::group(['middleware' => ['auth:sanctum']], function (){
     Route::get('/settings/tax', [App\Http\Controllers\Api\Admin\Settings\SettingApiController::class, 'getTax']);
     Route::get('/settings/vihicle', [App\Http\Controllers\Api\Admin\Settings\SettingApiController::class, 'getVihicle']);
     Route::get('/settings/vihicle_type', [App\Http\Controllers\Api\Admin\Settings\SettingApiController::class, 'getVihicleType']);
+    Route::get('/settings/packing', [App\Http\Controllers\Api\Admin\Settings\SettingApiController::class, 'getPacking']);
+    Route::get('/settings/{id}/packing', [App\Http\Controllers\Api\Admin\Settings\SettingApiController::class, 'getPackingById']);
 });

@@ -188,14 +188,26 @@ class CreateReceiveTransactionComponent extends Component
     public function addOrder()
     {
         $this->validate([
-            'dist_id'=>'required','goods_type_id'=>'required','product_type_id'=>'required','large'=>'numeric|min:0','height'=>'numeric|min:0',
-            'longs'=>'numeric|min:0','weigh'=>'numeric|min:0','r1'=>'required'
+            'dist_id'=>'required',
+            'goods_type_id'=>'required',
+            'product_type_id'=>'required',
+            'large'=>'numeric|min:0',
+            'height'=>'numeric|min:0',
+            'longs'=>'numeric|min:0',
+            'weigh'=>'numeric|min:0',
+            'r1'=>'required'
         ],[
-            'dist_id.required'=>'ເລືອກເງື່ອນໄຂການຂົນສົ່ງ','goods_type_id.required'=>'ເລືອກປະເພດເຄື່ອງ','product_type_id.required'=>'ເລືອກໝວດໝູ່',
-            'large.numeric'=>'ຕື່ມຄ່າ>=0','large.min'=>'ຕື່ມຄ່າ>=0',
-            'height.numeric'=>'ຕື່ມຄ່າ>=0','height.min'=>'ຕື່ມຄ່າ>=0',
-            'longs.numeric'=>'ຕື່ມຄ່າ>=0','longs.min'=>'ຕື່ມຄ່າ>=0',
-            'weigh.numeric'=>'ຕື່ມຄ່າ>=0','weigh.min'=>'ຕື່ມຄ່າ>=0',
+            'dist_id.required'=>'ເລືອກເງື່ອນໄຂການຂົນສົ່ງ',
+            'goods_type_id.required'=>'ເລືອກປະເພດເຄື່ອງ',
+            'product_type_id.required'=>'ເລືອກໝວດໝູ່',
+            'large.numeric'=>'ຕື່ມຄ່າ>=0',
+            'large.min'=>'ຕື່ມຄ່າ>=0',
+            'height.numeric'=>'ຕື່ມຄ່າ>=0',
+            'height.min'=>'ຕື່ມຄ່າ>=0',
+            'longs.numeric'=>'ຕື່ມຄ່າ>=0',
+            'longs.min'=>'ຕື່ມຄ່າ>=0',
+            'weigh.numeric'=>'ຕື່ມຄ່າ>=0',
+            'weigh.min'=>'ຕື່ມຄ່າ>=0',
             'r1.required'=>'ເລືອກສະກຸນເງິນ'
         ]);
 

@@ -20,7 +20,7 @@
     </div>
     <div class="col-10">
        <h1><b>&emsp;&emsp;{{__('lang.title_la')}} {{__('lang.title')}}</b></h1><br>
-       <h1><b>&emsp;&emsp;&emsp;&emsp;{{date('d/m/Y h:i:s', strtotime($receive->created_at))}}</b></h1>
+       <h1><b>&emsp;&emsp;&emsp;&emsp;{{date('d/m/Y H:i:s', strtotime($receive->created_at))}}</b></h1>
     </div>
   </div>
 </div> <!-- End Div Scope -->
@@ -76,10 +76,12 @@
       <h2>&emsp;&emsp;{{number_format($receive->cod_amount)}}</h2>
       <h2>&emsp;&emsp;{{number_format($receive->insur_amount)}}</h2>
       <h2>&emsp;&emsp;{{number_format($receive->pack_amount)}}</h2>
-      <h2>&emsp;&emsp;{{number_format($receive->amount + $receive->cod_amount + $receive->insur_amount)}}</h2>
+      <h2>&emsp;&emsp;{{number_format($receive->amount + $receive->pack_amount + $receive->cod_amount + $receive->insur_amount)}}</h2>
     </div>
     <div class="col-2">
-      <h2>&emsp;&emsp;{{__('lang.product')}}</h2>
+      <h2>&emsp;&emsp;{{__('lang.list')}}</h2>
+      <h2>&emsp;&emsp;Cm</h2>
+      <h2>&emsp;&emsp;Kg</h2>
       <h2>&emsp;&emsp;{{__('lang.lak')}}</h2>
       <h2>&emsp;&emsp;{{__('lang.lak')}}</h2>
       <h2>&emsp;&emsp;{{__('lang.lak')}}</h2>

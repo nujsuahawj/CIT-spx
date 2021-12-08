@@ -99,6 +99,9 @@ class ReceiveTransactionComponent extends Component
         $mat = DB::table('matterails')->where('receive_id', $this->rv_code)->update(array('status' => 'RJ'));
         $list_mat = DB::table('list_matterails')->where('rvcode', $this->rv_code)->update(array('status' => 'RJ'));
 
+        $log_detail = DB::table('logistic_details')->where('rvcode', $this->rv_code)->update(array('status' => 'RJ'));
+        $log_detail_list = DB::table('logistic_detail_lists')->where('rvcode', $this->rv_code)->update(array('status' => 'RJ'));
+
         $this->emit('alert', ['type' => 'success', 'message' => 'ຍົກເລີກ!! ຂໍ້ມູນສຳເລັດ!']);
     }
 

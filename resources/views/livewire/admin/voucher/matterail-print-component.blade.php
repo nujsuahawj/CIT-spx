@@ -77,7 +77,7 @@
       <h2>&emsp;&emsp;{{number_format($item->cod_amount)}}</h2>
       <h2>&emsp;&emsp;{{number_format($item->insur_amount)}}</h2>
       <h2>&emsp;&emsp;{{number_format($item->pack_amount)}}</h2>
-      <h2>&emsp;&emsp;{{number_format($item->amount + $item->cod_amount + $item->insur_amount)}}</h2>
+      <h2>&emsp;&emsp;{{number_format($item->amount + $item->pack_amount + $item->cod_amount + $item->insur_amount)}}</h2>
     </div>
     <div class="col-2">
       <h2>&emsp;&emsp;</h2>
