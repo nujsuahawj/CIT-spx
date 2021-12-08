@@ -30,10 +30,10 @@
                     <label><a  class="btn btn-primary btn-sm" href="{{route('transaction.create')}}">{{__('lang.create')}}</a></label>
                   </div>
                   <div class="col-md-3">
-                    <input wire:model="search" type="date" class="form-control" placeholder="{{__('lang.search')}}">
+                    <input wire:model="search" type="text" class="form-control" placeholder="{{__('lang.search')}}">
                   </div>
                   <div class="col-md-3">
-                    <input wire:model="search_by_date" type="text" class="form-control" placeholder="{{__('lang.search')}}">
+                    <input wire:model="search_by_date" type="date" class="form-control" placeholder="{{__('lang.search')}}">
                   </div>
                   <div class="col-md-3">
                     <select wire:model.defer="search_by_brc" class="form-control @error('branch_id') is-invalid @enderror">
