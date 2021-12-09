@@ -43,6 +43,7 @@ Route::group(['middleware' => ['auth:sanctum']], function (){
     Route::post('/apilogout/{id}', [App\Http\Controllers\Api\AuthApiController::class, 'apilogout']);
     
     //Receive
+    Route::get('/apireceive/history', [App\Http\Controllers\Api\ReceiveApiController::class, 'history']);
     Route::get('/apireceive/indexorder', [App\Http\Controllers\Api\ReceiveApiController::class, 'indexbill']);
     Route::post('/apireceive/order', [App\Http\Controllers\Api\ReceiveApiController::class, 'addOrder']);
     Route::delete('/apireceives/{id}/deleteorder', [App\Http\Controllers\Api\ReceiveApiController::class, 'destroyorder']);
