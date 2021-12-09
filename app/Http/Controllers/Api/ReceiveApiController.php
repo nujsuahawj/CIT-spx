@@ -8,6 +8,7 @@ use App\Http\Resources\ReceiveResource;
 use App\Http\Resources\SearchReceiveResource;
 use App\Http\Resources\BillReceiveResource;
 use App\Http\Resources\BillallReceiveResource;
+use App\Http\Resources\HistoryResource;
 use App\Models\Receive;
 use App\Models\Condition\Customer;
 use App\Models\Settings\CustomerType;
@@ -537,6 +538,13 @@ class ReceiveApiController extends Controller
     {
         return response()->json([BillallReceiveResource::collection(
             ReceiveTransaction::where('code', $code)->get()
+            )],200);
+    }
+
+    public function history()
+    {
+        return response()->json([HistoryResource::collection(
+            ReceiveTransaction::where('branch_create_id', auth()->user()->branchname->id)->get()
             )],200);
     }
 

@@ -14,7 +14,7 @@ use App\Models\Settings\District;
 use App\Models\Settings\Distance;
 use App\Models\Settings\Village;
 use App\Models\Settings\GoodsType;
-use App\Models\Settings\packet;
+use App\Models\Settings\Packet;
 use App\Models\Condition\ProductType;
 use App\Models\Settings\CalculatePrice;
 use App\Models\Transaction\Matterail;
