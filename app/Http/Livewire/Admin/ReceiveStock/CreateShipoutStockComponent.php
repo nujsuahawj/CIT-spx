@@ -39,14 +39,7 @@ class CreateShipoutStockComponent extends Component
         $traff = '';
         $staff = '';
 
-        $receivetransaction=ReceiveTransaction::select('receive_transactions.*','bs.company_name_la as brs','br.company_name_la as brr','cs.name as css','cr.name as crr') 
-        ->join('branches as bs','receive_transactions.branch_send','=','bs.id')
-        ->join('branches as br','receive_transactions.branch_receive','=','br.id')
-        ->join('customers as cs','receive_transactions.customer_send','=','cs.id')
-        ->join('customers as cr','receive_transactions.customer_receive','=','cr.id')
-        ->where(function($query){
-            $query->where('receive_transactions.code', 'like', '%' .$this->search. '%');
-        })->where('receive_transactions.status', 'ST')->paginate(10);
+        $receivetransaction=LogisticDetail::where('branch_id', auth()->user()->branchname->id)->where('status','ST')->where('del', 1)->paginate(10);
 
         if(!empty($this->traffic_id)){
             $traff = CreateTraffic::find($this->traffic_id);
@@ -99,21 +92,22 @@ class CreateShipoutStockComponent extends Component
 
     public function addReceive($ids)
     {
-            $transaction = ReceiveTransaction::find($ids);
+            $transaction = LogisticDetail::find($ids);
             if(!empty($transaction))
             {
-                $tran = LogisticTransection::where('rvcode', $transaction->code)->first();
+                $tran = LogisticTransection::where('rvcode', $transaction->rvcode)->first();
                 if(empty($tran)){
                     $logtran = new LogisticTransection;
-                    $logtran->rvcode = $transaction->code;
+                    $logtran->rvcode = $transaction->rvcode;
                     $logtran->sender_unit = Auth()->user()->branchname->id;
                     $logtran->user_unit = Auth()->user()->id;
                     $logtran->add_date = date('Y-m-d h-i-s');
-                    $logtran->sendto_unit = $transaction->branch_receive;
+                    $logtran->sendto_unit = $transaction->sendto_unit;
                     $logtran->status = 'P';
                     $logtran->branch_id = Auth()->user()->branchname->id;
                     $logtran->save();
 
+                    $detail = DB::table('logistic_details')->where('rvcode', $transaction->rvcode)->update(array('status'=>'ST','del' => 0));
                     $this->emit('alert', ['type' => 'success', 'message' => 'ເພີ່ມ ລາຍການ ສຳເລັດ!']);
                     $this->billReceive = '';
                 }else{
@@ -142,6 +136,8 @@ class CreateShipoutStockComponent extends Component
             $logtran->status = 'P';
             $logtran->branch_id = Auth()->user()->branchname->id;
             $logtran->save();
+
+            $detail = DB::table('logistic_details')->where('rvcode', $item->receive_id)->update(array('del' => 0));
         }
         $this->emit('alert', ['type' => 'success', 'message' => 'ເພີ່ມ ລາຍການ ສຳເລັດ!']);
     }
@@ -158,6 +154,9 @@ class CreateShipoutStockComponent extends Component
     {
         $this->dispatchBrowserEvent('hide-modal-delete');
         $singleData = LogisticTransection::find($ids);
+
+        $detail = DB::table('logistic_details')->where('rvcode', $singleData->rvcode)->update(array('status'=>'ST','del' => 1));
+
         $singleData->delete();
         $this->emit('alert', ['type' => 'success', 'message' => 'ລົບລາຍການສຳເລັດ!']);
     }
@@ -222,7 +221,7 @@ class CreateShipoutStockComponent extends Component
                         'longs'=>$value2->longs,
                         'weigh'=>$value2->weigh,
                         'amount'=>$value2->amount,
-                        'paid_type'=>$value2->paid_type,
+                        'paid_type'=>$value2->paid_by,
                         'sendto_unit'=>$detail->sendto_unit,
                         'user_id'=>Auth()->user()->id,
                         'branch_id'=>Auth()->user()->branchname->id,

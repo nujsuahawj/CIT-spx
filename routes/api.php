@@ -49,6 +49,7 @@ Route::group(['middleware' => ['auth:sanctum']], function (){
     Route::delete('/apireceives/{id}/deleteorder', [App\Http\Controllers\Api\ReceiveApiController::class, 'destroyorder']);
     Route::get('/apireceive/detail', [App\Http\Controllers\Api\DetailReceiveApiController::class,'index']);
     Route::get('/apireceive/count/{code}', [App\Http\Controllers\Api\ReceiveApiController::class, 'countIdMaterail']);
+    Route::get('/apireceive/materail/{code}', [App\Http\Controllers\Api\ReceiveApiController::class, 'showmaterail']);
     Route::get('/apireceive/bill/{code}', [App\Http\Controllers\Api\ReceiveApiController::class, 'showbillreceive']);
     Route::post('/apireceive/postmaterail', [App\Http\Controllers\Api\ReceiveApiController::class, 'postMatterail']);
     Route::get('/apireceive/billall/{code}', [App\Http\Controllers\Api\ReceiveApiController::class, 'showbillallreceive']);
@@ -79,4 +80,6 @@ Route::group(['middleware' => ['auth:sanctum']], function (){
     Route::get('/settings/vihicle_type', [App\Http\Controllers\Api\Admin\Settings\SettingApiController::class, 'getVihicleType']);
     Route::get('/settings/packing', [App\Http\Controllers\Api\Admin\Settings\SettingApiController::class, 'getPacking']);
     Route::get('/settings/{id}/packing', [App\Http\Controllers\Api\Admin\Settings\SettingApiController::class, 'getPackingById']);
+    Route::get('/settings/distance', [App\Http\Controllers\Api\Admin\Settings\SettingApiController::class, 'getDistance']);
+    
 });

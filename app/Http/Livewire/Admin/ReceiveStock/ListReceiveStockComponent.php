@@ -19,14 +19,9 @@ class ListReceiveStockComponent extends Component
 
     public function render()
     {
-        $shipout = LogisticDetail::select('logistic_details.id as id', 'logistic_details.rvcode','logistic_details.receive_date','logistic_details.status', 'logistics.code', 'logistics.trf_code', 'branches.company_name_la', 'branches.company_name_en', 'users.name')
-            ->join('logistics','logistic_details.lgt_id','=','logistics.id')
-            ->join('branches','logistic_details.sender_unit','=','branches.id')
-            ->join('users','logistic_details.user_receive','=','users.id')
-            ->where(function($query){
-                $query->where('logistics.code', 'like', '%' .$this->search. '%')
-                ->Orwhere('logistics.trf_code', 'like', '%' .$this->search. '%');
-            })->where('logistic_details.user_receive', auth()->user()->id)->where('logistics.status', 'ST')->get();
+        $shipout = LogisticDetail::where(function($query){
+                $query->where('rvcode', 'like', '%' .$this->search. '%');
+            })->where('branch_id', auth()->user()->branchname->id)->where('status', 'ST')->get();
 
         return view('livewire.admin.receive-stock.list-receive-stock-component',compact('shipout'))->layout('layouts.base');
     }

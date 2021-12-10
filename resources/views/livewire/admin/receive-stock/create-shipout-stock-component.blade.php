@@ -161,10 +161,10 @@
                         <th>{{__('lang.no')}}</th>
                         <th>{{__('lang.code')}}</th>
                         <th>{{__('lang.branch_sent')}}</th>
-                        <th>{{__('lang.customer_send')}}</th>
+                        <!-- <th>{{__('lang.customer_send')}}</th> -->
                         <th>{{__('lang.branch_receive')}}</th>
-                        <th>{{__('lang.customer_receive')}}</th>
-                        <th>{{__('lang.amount')}}</th>
+                        <!-- <th>{{__('lang.customer_receive')}}</th> -->
+                        <!-- <th>{{__('lang.amount')}}</th> -->
                         <th>{{__('lang.status')}}</th>
                         <th>{{__('lang.created_at')}}</th>
                         <th>{{__('lang.action')}}</th>
@@ -176,14 +176,42 @@
                       @foreach ($receivetransaction as $item)
                       <tr>
                         <td>{{$stt++}}</td>
-                        <td>{{$item->code}}</td>
-                        <td>{{$item->brs}}</td>
-                        <td>{{$item->css}}</td>
-                        <td>{{$item->brr}}</td>
-                        <td>{{$item->crr}}</td>
-                        <td >{{number_format($item->amount,2,",",".")}}</td>
-                        <td>{{$item->status}}</td>
-                        <td>{{$item->created_at}}</td>
+                        <td>{{$item->rvcode}}</td>
+                        <td>
+                          @if (Config::get('app.locale') == 'lo')
+                            {{ $item->sender->company_name_la }}
+                          @elseif (Config::get('app.locale') == 'en')
+                            {{ $item->sender->company_name_en }}
+                          @endif
+                        </td>
+                        <!-- <td>{{$item->css}}</td> -->
+                        <td>
+                          @if (Config::get('app.locale') == 'lo')
+                            {{ $item->sendto->company_name_la }}
+                          @elseif (Config::get('app.locale') == 'en')
+                            {{ $item->sendto->company_name_en }}
+                          @endif
+                        </td>
+                        <!-- <td>{{$item->crr}}</td> -->
+                        <!-- <td >{{number_format($item->amount)}}</td> -->
+                        <td>
+                                  @if($item->status == 'P')
+                                    <div class="btn btn-warning btn-xs"> {{__('lang.pending')}} </div>
+                                  @elseif($item->status == 'N')
+                                    <div class="btn btn-warning btn-xs"> {{__('lang.normal')}} </div>
+                                  @elseif($item->status == 'S')
+                                    <div class="btn btn-success btn-xs"> {{__('lang.sending')}} </div>
+                                  @elseif($item->status == 'ST')
+                                    <div class="btn btn-info btn-xs"> {{__('lang.warehouse')}} </div>
+                                  @elseif($item->status == 'RJ')
+                                    <div class="btn btn-danger btn-xs"> {{__('lang.reject')}} </div>
+                                  @elseif($item->status == 'F')
+                                    <div class="btn btn-info btn-xs"> {{__('lang.send_finish')}} </div>
+                                  @elseif($item->status == 'SC')
+                                    <div class="btn btn-primary btn-xs"> {{__('lang.send_goods_customer_finish')}} </div>
+                                  @endif
+                        </td>
+                        <td>{{date('d/m/Y H:i:s', strtotime($item->created_at))}}</td>
                         <td>
                             <button wire:click="addReceive({{$item->id}})" type="button" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i></button>
                         </td>

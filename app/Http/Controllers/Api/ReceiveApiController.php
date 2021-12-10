@@ -6,6 +6,7 @@ use App\Models\Transaction\ReceiveTransaction;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\ReceiveResource;
 use App\Http\Resources\SearchReceiveResource;
+use App\Http\Resources\MaterailResource;
 use App\Http\Resources\BillReceiveResource;
 use App\Http\Resources\BillallReceiveResource;
 use App\Http\Resources\HistoryResource;
@@ -51,26 +52,6 @@ class ReceiveApiController extends Controller
 
     public function addOrder (Request $request){
 
-        $request->validate([
-            'customer_receive'=>'required',
-            'goods_type_id'=>'required',
-            'product_type_id'=>'required',
-            'large'=>'numeric|min:0',
-            'height'=>'numeric|min:0',
-            'longs'=>'numeric|min:0',
-            'weigh'=>'numeric|min:0'
-        ],[
-            'goods_type_id.required'=>'ເລືອກປະເພດເຄື່ອງ',
-            'product_type_id.required'=>'ເລືອກໝວດໝູ່',
-            'large.numeric'=>'ຕື່ມຄ່າ>=0',
-            'large.min'=>'ຕື່ມຄ່າ>=0',
-            'height.numeric'=>'ຕື່ມຄ່າ>=0',
-            'height.min'=>'ຕື່ມຄ່າ>=0',
-            'longs.numeric'=>'ຕື່ມຄ່າ>=0',
-            'longs.min'=>'ຕື່ມຄ່າ>=0',
-            'weigh.numeric'=>'ຕື່ມຄ່າ>=0',
-            'weigh.min'=>'ຕື່ມຄ່າ>=0'
-        ]);
         $r1='LAK';
         $r2='NML';
         $cus = '1';
@@ -198,26 +179,26 @@ class ReceiveApiController extends Controller
                                 $matterail->status ="P";
                                 $matterail->save();
                     
-                                // $lis_m = new ListMatterail();
-                                // $lis_m->rvcode = $request->code;
-                                // $lis_m->mcode = $th;
-                                // $lis_m->cal_price_id = $fun_id;
-                                // $lis_m->currency_code = $request->r1;
-                                // $lis_m->amount = $cal_price;
-                                // $lis_m->cod_amount = $request->amount;
-                                // if($request->insur=='TRUE'){
-                                //     $lis_m->insur_amount= $request->amount * $in_rate;
-                                // }else{
-                                //     $lis_m->insur_amount=0;
-                                // }    
-                                // $lis_m->pack_id = $request->pack;
-                                // $lis_m->pack_amount = $request->pack_amount;       
-                                // $lis_m->paid_type = $request->piadtype;
-                                // $lis_m->paid_by = $request->piadtype;
-                                // $lis_m->branch_id = auth()->user()->branchname->id;
-                                // $lis_m->usr_create = auth()->user()->id;
-                                // $lis_m->status ="P";
-                                // $lis_m->save();
+                                $lis_m = new ListMatterail();
+                                $lis_m->rvcode = $request->code;
+                                $lis_m->mcode = $th;
+                                $lis_m->cal_price_id = $fun_id;
+                                $lis_m->currency_code = $request->r1;
+                                $lis_m->amount = $cal_price;
+                                $lis_m->cod_amount = $request->amount;
+                                if($request->insur=='TRUE'){
+                                    $lis_m->insur_amount= $request->amount * $in_rate;
+                                }else{
+                                    $lis_m->insur_amount=0;
+                                }    
+                                $lis_m->pack_id = $request->pack;
+                                $lis_m->pack_amount = $request->pack_amount;       
+                                $lis_m->paid_type = $request->piadtype;
+                                $lis_m->paid_by = $request->piadtype;
+                                $lis_m->branch_id = auth()->user()->branchname->id;
+                                $lis_m->usr_create = auth()->user()->id;
+                                $lis_m->status ="P";
+                                $lis_m->save();
                             }   
                         } else { 
                             return response()->json(['message' => "ສິນຄ້າບໍ່ຢູ່ໃນເງື່ອນໄຂການຄິດໄລ່ !"]);
@@ -343,6 +324,8 @@ class ReceiveApiController extends Controller
                             $lis_m->usr_create = auth()->user()->id;
                             $lis_m->status ="P";
                             $lis_m->save();
+
+                            return response()->json(['message' => "ບັນທຶກຂໍ້ມູນສຳເລັດ !"]);
                         }   
                     } else { 
                         return response()->json(['message' => "ສິນຄ້າບໍ່ຢູ່ໃນເງື່ອນໄຂການຄິດໄລ່ !"]);
@@ -526,6 +509,12 @@ class ReceiveApiController extends Controller
         }
     }
 
+    public function showmaterail($code)
+    {
+        return response()->json([MaterailResource::collection(
+            Matterail::where('receive_id', $code)->get()
+            )],200);
+    }
 
     public function showbillreceive($code)
     {
