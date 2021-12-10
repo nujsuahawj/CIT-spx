@@ -12,6 +12,7 @@ use App\Models\Settings\Village;
 use App\Models\Settings\District; 
 use App\Models\Settings\Province;
 use App\Models\Settings\Dividend; 
+use App\Models\Settings\Distance;
 use App\Models\Settings\Cod; 
 use App\Models\Settings\Exchange;
 use App\Models\Settings\GoodsType; 
@@ -44,7 +45,7 @@ class SettingApiController extends Controller
     public function getSearchCustomers($name)
     {
         return response([
-            'data'=> Customer::select('id','name','phone','pro_id','dis_id','vil_id')->where('phone',$name)->orderBy('id','desc')->get()
+            'data'=> Customer::select('id','name','phone','pro_id','dis_id','vil_id')->where('phone',$name)->orderBy('id','desc')->fist()
         ],200);
     }
     //ເງື່ອນໄຂລາຄາເປັນ Kg
@@ -196,6 +197,13 @@ class SettingApiController extends Controller
     {
         return response([
             'data'=> packet::find($id)
+        ],200);
+    }
+
+    public function getDistance()
+    {
+        return response([
+            'data'=> Distance::orderBy('id','desc')->get()
         ],200);
     }
 }

@@ -94,7 +94,7 @@
               <li><a href="{{route('admin.shipout')}}" class="dropdown-item">{{__('lang.shipout_goods')}}</a></li>
               @endif
               @if(auth()->user()->rolename->name == 'stock' || auth()->user()->rolename->name == 'manger' || auth()->user()->rolename->name == 'admin')
-              <!-- <li><a href="{{route('admin.receive_stock')}}" class="dropdown-item">{{__('lang.receive_stock')}}</a></li> -->
+              <li><a href="{{route('admin.receive_stock')}}" class="dropdown-item">{{__('lang.receive_stock')}}</a></li>
               @endif
               @if(auth()->user()->rolename->name == 'unit' || auth()->user()->rolename->name == 'manger' || auth()->user()->rolename->name == 'admin')
               <li><a href="{{route('admin.receive_branch')}}" class="dropdown-item">{{__('lang.receive_branch')}}</a></li>

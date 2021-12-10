@@ -231,6 +231,7 @@ class CreateShipoutComponent extends Component
             $logistic->user_create = auth()->user()->id;
             $logistic->branch_id = auth()->user()->branchname->id;
             $logistic->status = 'S';
+            $logistic->del = 1;
             $logistic->save();
 
             $traffic = CreateTraffic::where('trf_code', $this->traff_code)->first();
@@ -248,6 +249,7 @@ class CreateShipoutComponent extends Component
                     'add_date'=>$value->add_date,
                     'sendto_unit'=>$value->sendto_unit,
                     'status'=>'S',
+                    'del'=>1,
                     'branch_id'=>$value->branch_id,
                     'created_at'=> \Carbon\Carbon::now(),
                     'updated_at'=> \Carbon\Carbon::now()
@@ -277,6 +279,7 @@ class CreateShipoutComponent extends Component
                         'user_id'=>Auth()->user()->id,
                         'branch_id'=>Auth()->user()->branchname->id,
                         'status'=>'S',
+                        'del'=>1,
                         'created_at'=> \Carbon\Carbon::now(),
                         'updated_at'=> \Carbon\Carbon::now()
                     ); 

@@ -30,5 +30,9 @@ class Matterail extends Model
     {
         return $this->belongsTo('App\Models\Transaction\ReceiveTransaction','receive_id','code');
     }
+    public function packname()
+    {
+        return $this->belongsTo('App\Models\Settings\Packet','pack_id','id');
+    }
     														
 }
