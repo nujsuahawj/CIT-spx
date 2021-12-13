@@ -3,6 +3,8 @@
 namespace App\Http\Livewire\Admin\Traffic;
 
 use Livewire\Component;
+use Livewire\WithFileUploads;
+use Livewire\WithPagination;
 use App\Models\Transaction\ListTraffic;
 use App\Models\Transaction\CreateTraffic;
 use App\Models\Transaction\ExpTraffic;
@@ -13,7 +15,8 @@ use DB;
 
 class ViewTrafficComponent extends Component
 {
-
+    use WithPagination;
+    protected $paginationTheme = 'bootstrap';
     public $hiddenId, $trfcode, $traff_code;
     public function render()
     {

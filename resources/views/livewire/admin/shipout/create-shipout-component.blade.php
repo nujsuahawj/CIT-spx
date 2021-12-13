@@ -179,11 +179,23 @@
                       <tr>
                         <td>{{$stt++}}</td>
                         <td>{{$item->code}}</td>
-                        <td>{{$item->brs}}</td>
-                        <td>{{$item->css}}</td>
-                        <td>{{$item->brr}}</td>
-                        <td>{{$item->crr}}</td>
-                        <td >{{number_format($item->amount,2,",",".")}}</td>
+                        <td>
+                          @if (Config::get('app.locale') == 'lo')
+                            {{ $item->branch_sends->company_name_la }}
+                          @elseif (Config::get('app.locale') == 'en')
+                            {{ $item->branch_sends->company_name_en }}
+                          @endif
+                        </td>
+                        <td>{{ $item->customername_send->name }}</td>
+                        <td>
+                          @if (Config::get('app.locale') == 'lo')
+                            {{ $item->branch_receive_name->company_name_la }}
+                          @elseif (Config::get('app.locale') == 'en')
+                            {{ $item->branch_receive_name->company_name_en }}
+                          @endif
+                        </td>
+                        <td>{{ $item->customername_receive->name }}</td>
+                        <td >{{number_format($item->amount)}}</td>
                         <td>{{$item->status}}</td>
                         <td>{{$item->created_at}}</td>
                         <td>

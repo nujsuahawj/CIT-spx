@@ -38,7 +38,8 @@
                     <table class="table table-bordered table-striped">
                       <thead>
                         <tr>
-                          <th>{{__('lang.no')}}</th>
+                        <th>{{__('lang.no')}}</th>
+                          <th>{{__('lang.traffic_code')}}</th>
                           <th>{{__('lang.receive_code')}}</th>
                           <th>{{__('lang.from')}}</th>
                           <th>{{__('lang.date')}}</th>
@@ -52,16 +53,17 @@
                         @foreach($shipout as $item)
                             <tr>
                                <td>{{$stt++}}</td> 
+                               <td>{{$item->trafficname->trf_code}}</td> 
                                <td>{{$item->rvcode}}</td> 
                                <td>
                                     @if ( Config::get('app.locale') == 'lo')
-                                        {{$item->company_name_la}}
+                                        {{$item->sender->company_name_la}}
                                     @elseif ( Config::get('app.locale') == 'en' )
-                                        {{$item->company_name_en}}
+                                        {{$item->sender->company_name_en}}
                                     @endif
                                </td>
-                               <td>{{date('d/m/Y h:i:s', strtotime($item->receive_date))}}</td>
-                               <td>{{$item->name}}</td>
+                               <td>{{date('d/m/Y h:i:s', strtotime($item->created_at))}}</td>
+                               <td>{{$item->username->name}}</td>
                                 <td>
                                   @if($item->status == 'P')
                                     <div class="btn btn-danger btn-xs"> {{__('lang.pending')}} </div>

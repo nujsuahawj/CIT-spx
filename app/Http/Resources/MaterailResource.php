@@ -21,7 +21,6 @@ class MaterailResource extends JsonResource
             'goods_name'=> $this->goodname->name,
             'product_name'=> $this->productname->name, 
             'cal_type'=> $this->calculatename->name,
-            'dist_name'=> $this->distantname->name,  
             'large'=> $this->large, 
             'height'=> $this->height,
             'longs'=> $this->longs, 
@@ -29,9 +28,9 @@ class MaterailResource extends JsonResource
             'amount'=> $this->amount, 
             'cod_amount'=> $this->cod_amount, 
             'insur_amount' => $this->insur_amount,
-            'pack_name' => $this->packname->name,     
+            // 'pack_name' => $this->packname->name,     
             'pack_amount' => $this->pack_amount,   
-            'paid_by' => if($this->paid_by == sd){'ຕົ້ນທາງ'}else{'ປາຍທາງ'},   
+            'paid_by' => $this->paid_by,   
             'branch_id' => $this->insur_amount,   
         ];
     }

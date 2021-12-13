@@ -45,8 +45,30 @@ class SettingApiController extends Controller
     public function getSearchCustomers($name)
     {
         return response([
-            'data'=> Customer::select('id','name','phone','pro_id','dis_id','vil_id')->where('phone',$name)->orderBy('id','desc')->fist()
+            'data'=> Customer::select('id','name','phone','pro_id','dis_id','vil_id')->where('phone',$name)->orderBy('id','desc')->first()
         ],200);
+    }
+
+    public function addCus(Request $request)
+    {
+        $max_cus = Customer::select('id')->count('id');
+        if(!empty($max_cus)){
+            $sum_cus = $max_cus+1;
+            $code_cus =  'SPXCR'.$sum_cus;
+        }else{
+            $code_cus =  'SPXCR'.'1';
+        }
+        $customer = new Customer;
+        $customer->code = $code_cus; //str_replace(',','',$request->debit),
+        $customer->name = $request->name;
+        $customer->phone = $request->phone;
+        $customer->cus_type_id = $request->cus_type_id;
+        $customer->pro_id = $request->pro_id;
+        $customer->dis_id = $request->dis_id;
+        $customer->vil_id = $request->vil_id;
+        $customer->branch_id = auth()->user()->branchname->id;
+        $customer->note = $request->note;
+        $customer->save();
     }
     //ເງື່ອນໄຂລາຄາເປັນ Kg
     public function getCalculatorPriceKgs()

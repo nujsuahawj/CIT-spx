@@ -72,7 +72,7 @@
                     <table class="table table-striped">
                       <thead>
                       <tr style="text-align: center">
-                      <th>{{__('lang.no')}}</th>
+                          <th>{{__('lang.no')}}</th>
                           <th>{{__('lang.branch')}}</th>
                           <th>{{__('lang.code')}}</th>
                           <th>{{__('lang.goods_type')}}</th>
@@ -88,7 +88,8 @@
                       </thead>
                       <tbody>
                         @php $stt = 1; @endphp
-                        @foreach ($matterail as $child)
+
+                          @foreach ($matterail as $child)
 
                               <tr align="center">
                                   <td>{{$stt++}}</td>
@@ -117,6 +118,8 @@
                                    <b> {{__('lang.status')}}: {{__('lang.sending')}} </b>
                                   @elseif($child->status == 'ST')
                                    <b> {{__('lang.status')}}: {{__('lang.warehouse')}} </b>
+                                  @elseif($child->status == 'STS')
+                                   <b> {{__('lang.status')}}: {{__('lang.sending')}} </b>
                                   @elseif($child->status == 'F')
                                    <b> {{__('lang.status')}}: {{__('lang.send_finish')}} </b>
                                   @endif
@@ -124,6 +127,7 @@
                               </tr>
 
                           @endforeach
+
                       </tbody>
                       <tfoot>
 

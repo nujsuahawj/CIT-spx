@@ -26,20 +26,36 @@
                   <div align="center"><b>{{__('lang.enter_code_traffic')}}</b></div>
                 </div>
                 <div class="card-body">
-            <div class="form-group clearfix">
-
-                <div class="form-group">   
-                    <div class="input-group">
-                          <div class="input-group-prepend">
-                            <button type="button" class="btn btn-info">{{__('lang.bill_code')}}</button>
+                  <div class="form-group clearfix">
+                      <div class="form-group">   
+                          <div class="input-group">
+                                <div class="input-group-prepend">
+                                  <button type="button" class="btn btn-info">{{__('lang.bill_code')}}</button>
+                                </div>
+                              <input wire:model="code" wire:keydown.enter="acceptall" type="text" class="form-control  @error('code') is-invalid @enderror" >
                           </div>
-                        <input wire:model="code" type="text" class="form-control  @error('code') is-invalid @enderror" >
-                    </div>
-                @error('code') <span style="color: red" class="error">{{ $message }}</span> @enderror
+                      @error('code') <span style="color: red" class="error">{{ $message }}</span> @enderror
+                      </div>
+                  </div>
                 </div>
-            </div>
+              </div> <!-- end card -->
+              <div class="card">
+                <div class="card-header">
+                  <div align="center"><b>{{__('lang.bill_receive')}}</b></div>
                 </div>
-              </div>
+                <div class="card-body">
+                  <div class="form-group clearfix">
+                      <div class="form-group">   
+                          <div class="input-group">
+                                <div class="input-group-prepend">
+                                  <button type="button" class="btn btn-info">{{__('lang.bill_code')}}</button>
+                                </div>
+                              <input wire:model="code_bill" type="text" class="form-control" >
+                          </div>
+                      </div>
+                  </div>
+                </div>
+              </div> <!-- end card -->
             </div>
 
   
@@ -79,15 +95,15 @@
                         @foreach($shipout as $item)
                             <tr>
                               <td>{{$stt++}}</td>
-                              <td>{{$item->code}}</td>
+                              <td>{{$item->rvcode}}</td>
                               <td>{{$item->trafficname->trf_code}}</td>
                               <td>{{date('d/m/Y h:i:s', strtotime($item->create_date))}}</td>
                               <td>{{$item->username->name}}</td>
                               <td>
                                 @if ( Config::get('app.locale') == 'lo')
-                                    {{$item->branchname->company_name_la}}
+                                    {{$item->sendto->company_name_la}}
                                 @elseif ( Config::get('app.locale') == 'en' )
-                                    {{$item->branchname->company_name_en}}
+                                    {{$item->sendto->company_name_en}}
                                 @endif
                               </td>
                             <td width="2%" style="text-align: center">
@@ -95,9 +111,14 @@
                                   <button type="button" class="btn btn-info btn-sm dropdown-toggle dropdown-icon" data-toggle="dropdown">
                                   </button>
                                   <div class="dropdown-menu" role="menu">
-                                    @if($item->status == 'S')
-                                    <a class="dropdown-item" href="javascript:void(0)" wire:click="accept({{$item->id}})"><i class="fas fa-check-circle text-success"> {{__('lang.accept')}}</i></a>
+                                    @if(auth()->user()->rolename->name == 'stock')
+                                    
+                                      <!-- <a class="dropdown-item" href="javascript:void(0)" wire:click="accept({{$item->id}})"><i class="fas fa-check-circle text-success"> {{__('lang.accept')}}</i></a> -->
+                                     
+                                      <a class="dropdown-item" href="javascript:void(0)" wire:click="accept({{$item->id}})"><i class="fas fa-check-circle text-success"> {{__('lang.accept')}}</i></a>
+                                      
                                     @endif
+                                    
                                     <a class="dropdown-item" href="javascript:void(0)" wire:click="receivePrint({{$item->id}})"><i class="fas fa-print text-primary"> {{__('lang.printa4')}}</i></a>
                                   </div>
                                 </div>
@@ -108,8 +129,12 @@
                         </tbody>
                     </table>
                   </div>
+                  <div>
+                  {{$shipout->links()}}
+                  </div>
                   @endif
-                  @endif
+                @endif
+                  
                 </div>
               </div>
             </div>

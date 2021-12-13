@@ -71,6 +71,7 @@
                       <thead>
                       <tr style="text-align: center">
                           <th>{{__('lang.no')}}</th>
+                          <th>{{__('lang.branch')}}</th>
                           <th>{{__('lang.code')}}</th>
                           <th>{{__('lang.goods_type')}}</th>
                           <th>{{__('lang.product_type')}}</th>
@@ -80,39 +81,23 @@
                           <th>{{__('lang.weigh')}}</th>
                           <th>{{__('lang.paid_type')}}</th>
                           <th>{{__('lang.amount')}}</th>
+                          <th>{{__('lang.status')}}</th>
                       </tr>
                       </thead>
                       <tbody>
                         @php $stt = 1; @endphp
-                        @foreach ($branch as $item)
-                        <tr>
-                          <td colspan="5">
-                            @if (Config::get('app.locale') == 'lo')
-                              <b>{{ $item->sendto->company_name_la }}</b>
-                            @elseif (Config::get('app.locale') == 'en')
-                              <b>{{ $item->sendto->company_name_en }}</b>
-                            @endif
-                          </td>
-                          <td colspan="5" align="right">
-                                  @if($item->status == 'P')
-                                   <b> {{__('lang.status')}}: {{__('lang.pending')}} </b>
-                                  @elseif($item->status == 'N')
-                                   <b> {{__('lang.status')}}: {{__('lang.normal')}} </b>
-                                  @elseif($item->status == 'S')
-                                   <b> {{__('lang.status')}}: {{__('lang.sending')}} </b>
-                                  @elseif($item->status == 'ST')
-                                   <b> {{__('lang.status')}}: {{__('lang.warehouse')}} </b>
-                                  @elseif($item->status == 'F')
-                                   <b> {{__('lang.status')}}: {{__('lang.send_finish')}} </b>
-                                  @endif
-                          </td>
-                        </tr>
-                          @foreach ($matterail as $child)
-                            @if ($item->sendto_unit == $child->sendto_unit)
+                        @foreach ($matterail as $child)
 
                               <tr align="center">
                                   <td>{{$stt++}}</td>
-                                  <td>{{$child->receive_id}}</td>
+                                  <td>
+                                      @if (Config::get('app.locale') == 'lo')
+                                        <b>{{ $child->sendto->company_name_la }}</b> 
+                                      @elseif (Config::get('app.locale') == 'en')
+                                        <b>{{ $child->sendto->company_name_en }}</b>
+                                      @endif
+                                  </td>
+                                  <td>{{$child->rvcode}}</td>
                                   <td>{{$child->goodname->name}}</td>
                                   <td>{{$child->productname->name}}</td>
                                   <td>{{$child->large}}</td>
@@ -121,11 +106,22 @@
                                   <td>{{$child->weigh}}</td>
                                   <td>@if($child->paid_type=='SD') {{__('lang.by_sender')}}@else {{__('lang.by_receiver')}}@endif</td>
                                   <td>{{number_format($child->amount)}}</td>
+                                  <td colspan="5" align="right">
+                                  @if($child->status == 'P')
+                                   <b> {{__('lang.status')}}: {{__('lang.pending')}} </b>
+                                  @elseif($child->status == 'N')
+                                   <b> {{__('lang.status')}}: {{__('lang.normal')}} </b>
+                                  @elseif($child->status == 'S')
+                                   <b> {{__('lang.status')}}: {{__('lang.sending')}} </b>
+                                  @elseif($child->status == 'ST')
+                                   <b> {{__('lang.status')}}: {{__('lang.warehouse')}} </b>
+                                  @elseif($child->status == 'F')
+                                   <b> {{__('lang.status')}}: {{__('lang.send_finish')}} </b>
+                                  @endif
+                                  </td>
                               </tr>
 
-                            @endif
                           @endforeach
-                        @endforeach
                       </tbody>
                       <tfoot>
 

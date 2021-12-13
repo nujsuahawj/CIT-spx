@@ -27,7 +27,6 @@
                 </div>
                 <div class="card-body">
             <div class="form-group clearfix">
-
                 <div class="form-group">   
                     <div class="input-group">
                           <div class="input-group-prepend">
@@ -39,7 +38,24 @@
                 </div>
             </div>
                 </div>
-              </div>
+              </div> <!-- end card -->
+              <div class="card">
+                <div class="card-header">
+                  <div align="center"><b>{{__('lang.bill_receive')}}</b></div>
+                </div>
+                <div class="card-body">
+                  <div class="form-group clearfix">
+                      <div class="form-group">   
+                          <div class="input-group">
+                                <div class="input-group-prepend">
+                                  <button type="button" class="btn btn-info">{{__('lang.bill_code')}}</button>
+                                </div>
+                              <input wire:model="code_bill" type="text" class="form-control" >
+                          </div>
+                      </div>
+                  </div>
+                </div>
+              </div> <!-- end card -->
             </div>
 
   
@@ -53,7 +69,7 @@
                   </div>
                 </div>
                 <div class="card-body">
-                  @if(!empty($traffic_id))
+                  
                   <div class="table-responsive">
                     <table class="table table-bordered table-striped">
                       <thead>
@@ -70,6 +86,7 @@
                         @php
                           $stt = 1;    
                         @endphp
+                        @if($traffic_id != '')
                         @foreach($shipout as $item)
                             <tr>
                                <td>{{$stt++}}</td> 
@@ -89,6 +106,8 @@
                                     <div class="btn btn-info btn-xs"> {{__('lang.normal')}} </div>
                                   @elseif($item->status == 'S')
                                     <div class="btn btn-warning btn-xs"> {{__('lang.sending')}} </div>
+                                    @elseif($item->status == 'STS')
+                                    <div class="btn btn-warning btn-xs"> {{__('lang.sending')}} </div>
                                   @elseif($item->status == 'ST')
                                     <div class="btn btn-info btn-xs"> {{__('lang.warehouse')}} </div>
                                   @elseif($item->status == 'F')
@@ -100,7 +119,7 @@
                                   <button type="button" class="btn btn-info btn-sm dropdown-toggle dropdown-icon" data-toggle="dropdown">
                                   </button>
                                   <div class="dropdown-menu" role="menu">
-                                    @if($item->status == 'S')
+                                    @if($item->status == 'STS')
                                     <a class="dropdown-item" href="javascript:void(0)" wire:click="accept({{$item->id}})"><i class="fas fa-check-circle text-success"> {{__('lang.accept')}}</i></a>
                                     @endif
                                     <a class="dropdown-item" href="javascript:void(0)" wire:click="receivePrint({{$item->id}})"><i class="fas fa-print text-primary"> {{__('lang.printa4')}}</i></a>
@@ -109,11 +128,11 @@
                             </td>
                           </tr>
                         @endforeach
-                        
+                        @endif
                         </tbody>
                     </table>
                   </div>
-                  @endif
+                  {{$shipout->links()}}
                 </div>
               </div>
             </div>

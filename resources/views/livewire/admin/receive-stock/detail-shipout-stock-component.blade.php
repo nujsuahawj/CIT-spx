@@ -116,6 +116,8 @@
                                    <b> {{__('lang.status')}}: {{__('lang.normal')}} </b>
                                   @elseif($child->status == 'S')
                                    <b> {{__('lang.status')}}: {{__('lang.sending')}} </b>
+                                  @elseif($child->status == 'STS')
+                                   <b> {{__('lang.status')}}: {{__('lang.sending')}} </b>
                                   @elseif($child->status == 'ST')
                                    <b> {{__('lang.status')}}: {{__('lang.warehouse')}} </b>
                                   @elseif($child->status == 'F')

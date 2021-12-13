@@ -65,6 +65,8 @@ Route::group(['middleware' => ['auth:sanctum']], function (){
     //Settings
     Route::get('/settings/customers', [App\Http\Controllers\Api\Admin\Settings\SettingApiController::class, 'getCustomers']);
     Route::get('/settings/searchcustomers/{name}', [App\Http\Controllers\Api\Admin\Settings\SettingApiController::class, 'getSearchCustomers']);
+    Route::post('/customer/addcus', [App\Http\Controllers\Api\Admin\Settings\SettingApiController::class,'addCus']);
+
     Route::get('/settings/roles', [App\Http\Controllers\Api\Admin\Settings\SettingApiController::class, 'getRoles']);
     Route::get('/settings/dividend', [App\Http\Controllers\Api\Admin\Settings\SettingApiController::class, 'getDividend']);
     Route::get('/settings/cod', [App\Http\Controllers\Api\Admin\Settings\SettingApiController::class, 'getCod']);

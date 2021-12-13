@@ -16,6 +16,7 @@ use App\Models\Transaction\ExpendType;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Settings\Branch;
 use App\Models\Staff\StaffDoing;
+use App\Models\Transaction\TbLog;
 use Carbon\Carbon;
 use DB;
 
@@ -38,27 +39,50 @@ class CreateShipoutComponent extends Component
     {
         $traff = '';
         $staff = '';
+
+        $add = ReceiveTransaction::where('code', $this->billReceive)->first();
+        if(!empty($add))
+        {
+            $tran = LogisticTransection::where('rvcode', $add->code)->first();
+            if(empty($tran)){
+                $logtran = new LogisticTransection;
+                $logtran->rvcode = $add->code;
+                $logtran->sender_unit = $add->branch_send;
+                $logtran->user_unit = Auth()->user()->id;
+                $logtran->add_date = date('Y-m-d h-i-s');
+                $logtran->sendto_unit = $add->branch_receive;
+                $logtran->status = 'P';
+                $logtran->branch_id = Auth()->user()->branchname->id;
+                $logtran->save();
+
+                $receive = DB::table('receive_transactions')->where('code', $add->code)->update(array('del' => 0));
+                    $matter = DB::table('matterails')->where('receive_id', $add->code)->update(array('del' => 0));
+
+                $this->emit('alert', ['type' => 'success', 'message' => 'ເພີ່ມ ລາຍການ ສຳເລັດ!']);
+                $this->billReceive = '';
+            }else{
+                $this->emit('alert', ['type' => 'error', 'message' => 'ທ່ານໄດ້ເພີ່ມລາຍການນີ້ແລ້ວ!']);
+                $this->billReceive = '';
+            }
+        }
         
         if(!empty($this->traffic_id)){
             $traff = CreateTraffic::find($this->traffic_id);
             $staff = StaffDoing::where('trf_code', $traff->trf_code)->get();
         }
         
-        $receive = ReceiveTransaction::select('code','valuedt','status')->where('status', 'N')->orderBy('id','desc')->where('branch_create_id', auth()->user()->branchname->id)->get();
+        $receive = ReceiveTransaction::select('code','valuedt','status')->where('status', 'N')->orderBy('id','desc')
+                ->where('branch_create_id', auth()->user()->branchname->id)->where('del',1)->get();
 
-        $transaction = LogisticTransection::select('id','rvcode','add_date','sendto_unit')->where('status', 'P')->where('branch_id', auth()->user()->branchname->id)
+        $transaction = LogisticTransection::select('id','rvcode','add_date','sendto_unit')->where('status', 'P')
+        ->where('branch_id', auth()->user()->branchname->id)
         ->where(function($query){
             $query->where('rvcode', 'like', '%' .$this->search_detail. '%');
         })->orderBy('id','desc')->paginate(10);
 
-        $receivetransaction=ReceiveTransaction::select('receive_transactions.*','bs.company_name_la as brs','br.company_name_la as brr','cs.name as css','cr.name as crr') 
-        ->join('branches as bs','receive_transactions.branch_send','=','bs.id')
-        ->join('branches as br','receive_transactions.branch_receive','=','br.id')
-        ->join('customers as cs','receive_transactions.customer_send','=','cs.id')
-        ->join('customers as cr','receive_transactions.customer_receive','=','cr.id')
-        ->where(function($query){
-            $query->where('receive_transactions.code', 'like', '%' .$this->search. '%');
-        })->where('status', 'N')->where('receive_transactions.branch_send', auth()->user()->branchname->id)->paginate(10);
+        $receivetransaction=ReceiveTransaction::where(function($query){
+            $query->where('code', 'like', '%' .$this->search. '%');
+        })->where('status', 'N')->where('branch_send', auth()->user()->branchname->id)->where('del',1)->paginate(10);
 
         if(!empty($this->receiveCode))
         {
@@ -126,6 +150,9 @@ class CreateShipoutComponent extends Component
 
                     $this->emit('alert', ['type' => 'success', 'message' => 'ເພີ່ມ ລາຍການ ສຳເລັດ!']);
                     $this->billReceive = '';
+
+                    $receive = DB::table('receive_transactions')->where('code', $transaction->code)->update(array('del' => 0));
+                    $matter = DB::table('matterails')->where('receive_id', $transaction->code)->update(array('del' => 0));
                 }else{
                     $this->emit('alert', ['type' => 'error', 'message' => 'ທ່ານໄດ້ເພີ່ມລາຍການນີ້ແລ້ວ!']);
                     $this->billReceive = '';
@@ -138,7 +165,8 @@ class CreateShipoutComponent extends Component
 
     public function addall()
     {
-        $transaction = ReceiveTransaction::where('branch_create_id', auth()->user()->branch_id)->where('status', 'N')->get();
+        $transaction = ReceiveTransaction::where('branch_create_id', auth()->user()->branch_id)
+                                        ->where('status', 'N')->where('del',1)->get();
         foreach($transaction as $item){
             if(!empty($item->id))
             {
@@ -153,6 +181,9 @@ class CreateShipoutComponent extends Component
                     $logtran->status = 'P';
                     $logtran->branch_id = Auth()->user()->branchname->id;
                     $logtran->save();
+
+                    $receive = DB::table('receive_transactions')->where('code', $item->code)->update(array('del' => 0));
+                    $matter = DB::table('matterails')->where('receive_id', $item->code)->update(array('del' => 0));
     
                     $this->emit('alert', ['type' => 'success', 'message' => 'ເພີ່ມ ລາຍການ ສຳເລັດ!']);
                     $this->billReceive = '';
@@ -184,6 +215,10 @@ class CreateShipoutComponent extends Component
                     $logtran->status = 'P';
                     $logtran->branch_id = Auth()->user()->branchname->id;
                     $logtran->save();
+
+                    $receive = DB::table('receive_transactions')->where('code', $transactions->code)->update(array('del' => 0));
+                    $matter = DB::table('matterails')->where('receive_id', $transactions->code)->update(array('del' => 0));
+
                     $this->emit('alert', ['type' => 'success', 'message' => 'ເພີ່ມ ລາຍການ ສຳເລັດ!']);
                     $this->billReceive = '';
                 }else{
@@ -209,6 +244,8 @@ class CreateShipoutComponent extends Component
     {
         $this->dispatchBrowserEvent('hide-modal-delete');
         $singleData = LogisticTransection::find($ids);
+        $receive = DB::table('receive_transactions')->where('code', $singleData->rvcode)->update(array('del' => 1));
+        $matter = DB::table('matterails')->where('receive_id', $singleData->rvcode)->update(array('del' => 1));
         $singleData->delete();
         $this->emit('alert', ['type' => 'success', 'message' => 'ລົບລາຍການສຳເລັດ!']);
     }
@@ -287,7 +324,6 @@ class CreateShipoutComponent extends Component
                     }
 
                 $receive = DB::table('receive_transactions')->where('code', $value->rvcode)->update(array('status' => 'S'));
-
                 $matter = DB::table('matterails')->where('receive_id', $value->rvcode)->update(array('status' => 'S'));
 
                 $deleteTrans = LogisticTransection::where('id', $value->id)->delete();
@@ -304,6 +340,19 @@ class CreateShipoutComponent extends Component
         $this->dispatchBrowserEvent('show-modal-receive-detail');
         $trans = LogisticTransection::find($ids);
         $this->receiveCode = $trans->rvcode;
+    }
+
+    public function rec_log($cd,$vcd,$brid,$usrid,$dts,$sts)
+    {
+        $addlog= new TbLog();
+        $addlog->code=$cd;
+        $addlog->valuedt=date('Y-m-d');
+        $addlog->vcode=$vcd;
+        $addlog->branch_id=$brid;
+        $addlog->user_create=$usrid;
+        $addlog->details=$dts;
+        $addlog->status=$sts;
+        $addlog->save();
     }
 
 }

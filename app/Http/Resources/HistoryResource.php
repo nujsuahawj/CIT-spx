@@ -27,7 +27,7 @@ class HistoryResource extends JsonResource
             'branch_receive_code'=> $this->branch_receive_name->code, 
             'branch_receive'=> $this->branch_receive_name->company_name_la, 
             'branch_receive_phone'=> $this->branch_receive_name->phone, 
-            'branch_receive_vilname'=> $this->branch_receive_name->villname->name, 
+            'branch_receive_vilname'=> $this->customername_receive->villname->name, 
             'amount' => $this->amount,   
             'cod_amount' => $this->cod_amount,   
             'insur_amount' => $this->insur_amount,   
