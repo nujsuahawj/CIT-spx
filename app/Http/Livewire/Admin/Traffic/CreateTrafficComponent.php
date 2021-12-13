@@ -43,7 +43,7 @@ class CreateTrafficComponent extends Component
 
     public function render()
     {
-        $employee = Employee::whereIn('position_id', [2,7])->orderBy('id','desc')->get();
+        $employee = Employee::where('position_id', 1)->orderBy('id','desc')->get();
         $empdoing = StaffDoing::where('trf_code', $this->code)->orderBy('id','desc')->get();
         $expend = ExpendType::where('exp_code', $this->code)->orderBy('id','desc')->get();
         $vihicle = Vihicle::orderBy('id','desc')->get();

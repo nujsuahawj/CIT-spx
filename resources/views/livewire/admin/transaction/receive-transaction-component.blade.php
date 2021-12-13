@@ -90,6 +90,8 @@
                                     <div class="btn btn-success btn-xs"> {{__('lang.sending')}} </div>
                                   @elseif($item->status == 'ST')
                                     <div class="btn btn-info btn-xs"> {{__('lang.warehouse')}} </div>
+                                  @elseif($item->status == 'STS')
+                                    <div class="btn btn-warning btn-xs"> {{__('lang.sending')}} </div>
                                   @elseif($item->status == 'RJ')
                                     <div class="btn btn-danger btn-xs"> {{__('lang.reject')}} </div>
                                   @elseif($item->status == 'F')

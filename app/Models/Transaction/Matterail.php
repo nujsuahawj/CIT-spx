@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Matterail extends Model
 {
     use HasFactory;
-    protected $fillable = ['id','code','receive_id','goods_id','product_type_id','large','height','longs','weigh','cal_id','currency_code','amout','paid_type','cod_amount','insur_amount','pack_id','pack_amount','branch_id','status'];
+    protected $fillable = ['id','code','receive_id','goods_id','distance_id','product_type_id','large','height','longs','weigh'
+    ,'cal_id','currency_code','amout','paid_type','cod_amount','insur_amount','pack_id','pack_amount','branch_id','status'];
 
     public function goodname(){
         return $this->belongsTo('App\Models\Settings\GoodsType','goods_id','id');

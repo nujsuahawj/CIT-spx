@@ -52,7 +52,7 @@
                               <div class="input-group-prepend">
                                 <button wire:click="showbillReceiveDetail()" type="button" class="btn btn-info">{{__('lang.bill_receive')}}</button>
                               </div>
-                            <input wire:model="billReceive" wire:keydown.enter="addbillReceive" type="text" class="form-control  @error('billReceive') is-invalid @enderror">
+                            <input wire:model="billReceive" type="text" class="form-control  @error('billReceive') is-invalid @enderror">
                         </div>
                     @error('billReceive') <span style="color: red" class="error">{{ $message }}</span> @enderror
                     </div>
@@ -158,7 +158,7 @@
                   <table class="table table-bordered table-striped">
                     <thead>
                       <tr>
-                        <th>{{__('lang.no')}}</th>
+                      <th>{{__('lang.no')}}</th>
                         <th>{{__('lang.code')}}</th>
                         <th>{{__('lang.branch_sent')}}</th>
                         <!-- <th>{{__('lang.customer_send')}}</th> -->
@@ -220,16 +220,15 @@
                       
                       </tbody>
                   </table>
-
+                  </div>
                   <div>
                     {{$receivetransaction->links()}}
                   </div>
-
-                </div>
+                
           </div>
           <div class="modal-footer justify-content-between">
             <button type="button" class="btn btn-danger" data-dismiss="modal">{{__('lang.close')}}</button>
-            <!-- <button wire:click="addall()" type="button" class="btn btn-success float-right" data-dismiss="modal">>>> {{__('lang.select_all')}}</button> -->
+            <button wire:click="addall()" type="button" class="btn btn-success float-right" data-dismiss="modal"> {{__('lang.select_all')}}</button>
           </div>
         </div>
       </div>

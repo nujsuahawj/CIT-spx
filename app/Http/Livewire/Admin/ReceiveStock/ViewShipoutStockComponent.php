@@ -18,7 +18,9 @@ class ViewShipoutStockComponent extends Component
 
     public function render()
     {
-        $shipout = Logistic::orderBy('id','desc')->where('branch_id', auth()->user()->branchname->id)->where(function($query){
+        $shipout = Logistic::orderBy('id','desc')->where('branch_id', auth()->user()->branchname->id)
+        ->where('status','STS')
+        ->where(function($query){
             $query->where('code', 'like', '%' .$this->code. '%')
             ->Orwhere('trf_code', 'like', '%' .$this->code. '%');
         })->get();

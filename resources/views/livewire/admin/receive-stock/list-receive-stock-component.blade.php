@@ -62,7 +62,7 @@
                                         {{$item->sender->company_name_en}}
                                     @endif
                                </td>
-                               <td>{{date('d/m/Y h:i:s', strtotime($item->receive_date))}}</td>
+                               <td>{{date('d/m/Y h:i:s', strtotime($item->created_at))}}</td>
                                <td>{{$item->username->name}}</td>
                                 <td>
                                   @if($item->status == 'P')
