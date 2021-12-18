@@ -43,14 +43,21 @@
                   <li><a href="{{route('admin.shipping_status')}}" class="dropdown-item">{{__('lang.shipping_status')}}</a></li>
                 </ul>
               </li>
-              <li><a href="{{route('dashboardsetting.index')}}" class="dropdown-item">{{__('lang.module_system')}}</a></li>
+              <li class="dropdown-submenu dropdown-hover">
+                <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">{{__('lang.module_system')}}</a>
+                <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
+                  <li><a href="{{route('settings.branchs-componnet')}}" class="dropdown-item">{{__('lang.branch')}}</a></li>
+                  <li><a href="{{route('settings.users-component')}}" class="dropdown-item">{{__('lang.user')}}</a></li>
+                </ul>
+              </li>
               <li class="dropdown-divider"></li>
               @endif
               <li><a href="{{route('admin.unit_contract')}}" class="dropdown-item">{{__('lang.unit_contract')}}</a></li>
               <!-- <li><a href="{{route('admin.pay_devidend')}}" class="dropdown-item">{{__('lang.pay_dividend')}}</a></li> -->
               @if(auth()->user()->rolename->name == 'staff'  || auth()->user()->rolename->name == 'manger' || auth()->user()->rolename->name == 'admin')
               <!-- <li><a href="" class="dropdown-item">{{__('lang.ewallet')}}</a></li> -->
-              @endif
+               @endif
+               
             </ul> 
           </li>
         

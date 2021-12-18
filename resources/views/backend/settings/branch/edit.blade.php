@@ -377,7 +377,7 @@
                 
                 <div class="card-footer">
                     <button type="submit" class="btn btn-primary">{{__('lang.save')}}</button>
-                    <a class="btn btn-warning" href="{{route('branch.index')}}" >{{__('lang.back')}}</a>
+                    <a class="btn btn-warning" href="{{route('settings.branchs-componnet')}}" >{{__('lang.back')}}</a>
                 </div>
             </form>
 

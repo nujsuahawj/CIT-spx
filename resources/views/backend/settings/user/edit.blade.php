@@ -175,7 +175,7 @@
                 </div>
                 <div class="card-footer">
                     <button type="submit" class="btn btn-primary">{{__('lang.save')}}</button>
-                    <a class="btn btn-warning" href="{{route('user.index')}}" >{{__('lang.back')}}</a>
+                    <a class="btn btn-warning" href="{{route('settings.users-component')}}" >{{__('lang.back')}}</a>
                 </div>
             </form>
             

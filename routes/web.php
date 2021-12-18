@@ -169,6 +169,8 @@ Route::group(['middleware'=> 'adminLogin'], function(){
     Route::resource('/dashboardsetting', App\Http\Controllers\Backend\Settings\DashboardSettingController::class);
     Route::resource('/branch', App\Http\Controllers\Backend\Settings\BranchController::class);
     Route::resource('/user', App\Http\Controllers\Backend\Settings\UserController::class);
+    Route::get('/branchs', App\Http\Livewire\Admin\Settings\BranchsComponnet::class)->name('settings.branchs-componnet');
+    Route::get('/users', App\Http\Livewire\Admin\Settings\UsersComponent::class)->name('settings.users-component');
 
     //voucher
     Route::get('/printReceive/{service_id}', App\Http\Livewire\Admin\Voucher\ReceivePrintComponent::class,"services")->name('voucher.printreceive');
