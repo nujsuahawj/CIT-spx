@@ -65,7 +65,7 @@
                           <td>{{$item->email}}</td>
                           <td>
                             @if (!empty($item->branch_id))
-                              {{-- {{$item->branchname->company_name_la}} --}}
+                              {{$item->branchname->company_name_la}}
                             @endif
                           </td>
                           <td>
