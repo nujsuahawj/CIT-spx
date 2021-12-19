@@ -148,6 +148,7 @@ Route::group(['middleware'=> 'adminLogin'], function(){
 
     //Report
     Route::get('/report_separate_goods', App\Http\Livewire\Admin\Report\ReportSeparateGoods::class)->name('admin.report_separate_goods');
+    Route::get('/report_receive_goods', App\Http\Livewire\Admin\Report\ReportReceiveGoods::class)->name('admin.report_receive_goods');
     
     //Documents
     Route::resource('/dashboarddoc', App\Http\Controllers\Backend\Documents\DashboardDocController::class);

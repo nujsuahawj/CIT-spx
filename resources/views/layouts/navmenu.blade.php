@@ -129,7 +129,7 @@
               <li><a href="" class="dropdown-item">{{__('lang.reports')}}</a></li>
               <li><a href="" class="dropdown-item">{{__('lang.income_report')}}</a></li>
               <li><a href="" class="dropdown-item">{{__('lang.expenses_report')}}</a></li>
-              <li><a href="" class="dropdown-item">{{__('lang.reveive_goods_report')}}</a></li>
+              <li><a href="{{route('admin.report_receive_goods')}}" class="dropdown-item">{{__('lang.reveive_goods_report')}}</a></li>
               <li><a href="" class="dropdown-item">{{__('lang.shipout_goods_report')}}</a></li>
               <li><a href="" class="dropdown-item">{{__('lang.condition_report')}}</a></li>
               <li><a href="{{route('admin.report_separate_goods')}}" class="dropdown-item">{{__('lang.separate_goods_report')}}</a></li>
