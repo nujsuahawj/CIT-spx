@@ -7,9 +7,10 @@ use App\Models\Transaction\ReceiveTransaction;
 use App\Models\Settings\Branch;
 use DB;
 
-class ReportReceiveGoods extends Component
+class ReportShipoutGoods extends Component
 {
     public $search, $search_by_date, $search_by_brc=0;
+
     public function render()
     {
         $branchid  = Auth()->user()->branchname->id;
@@ -24,7 +25,7 @@ class ReportReceiveGoods extends Component
                 ->where(function($query){
                     $query->where('receive_transactions.code', 'like', '%' .$this->search. '%');
                  })->where('receive_transactions.valuedt', 'like', '%' .$this->search_by_date. '%')  
-                 ->where('status','!=', 'SC')
+                 ->where('status','=', 'SC')
                 ->orderBy('receive_transactions.id','desc')->get();
             }else{
                 $receivetransaction=ReceiveTransaction::select('receive_transactions.*','bs.company_name_la as brs','br.company_name_la as brr','cs.name as css','cr.name as crr') 
@@ -35,7 +36,7 @@ class ReportReceiveGoods extends Component
                 ->where(function($query){
                     $query->where('receive_transactions.code', 'like', '%' .$this->search. '%');
                  })->where('receive_transactions.valuedt', 'like', '%' .$this->search_by_date. '%')
-                 ->where('status','!=', 'SC')
+                 ->where('status','=', 'SC')
                  ->orderBy('receive_transactions.id','desc')->get();
             }
         }else{
@@ -49,9 +50,9 @@ class ReportReceiveGoods extends Component
             ->where(function($query){
                 $query->where('receive_transactions.code', 'like', '%' .$this->bch. '%');
              })->where('receive_transactions.valuedt', 'like', '%' .$this->search_by_date. '%')
-             ->where('status','!=', 'SC')
+             ->where('status','=', 'SC')
              ->orderBy('receive_transactions.id','desc')->get();
         }
-        return view('livewire.admin.report.report-receive-goods',compact('branch','receivetransaction'))->layout('layouts.base');
+        return view('livewire.admin.report.report-shipout-goods',compact('branch','receivetransaction'))->layout('layouts.base');
     }
 }
