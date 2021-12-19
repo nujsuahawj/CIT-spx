@@ -35,6 +35,7 @@ class ReportReceiveGoods extends Component
                 ->where(function($query){
                     $query->where('receive_transactions.code', 'like', '%' .$this->search. '%');
                  })->where('receive_transactions.valuedt', 'like', '%' .$this->search_by_date. '%')
+                 ->where('status','!=', 'SC')
                  ->orderBy('receive_transactions.id','desc')->paginate(10);
             }
         }else{
@@ -48,6 +49,7 @@ class ReportReceiveGoods extends Component
             ->where(function($query){
                 $query->where('receive_transactions.code', 'like', '%' .$this->bch. '%');
              })->where('receive_transactions.valuedt', 'like', '%' .$this->search_by_date. '%')
+             ->where('status','!=', 'SC')
              ->orderBy('receive_transactions.id','desc')->get();
         }
         return view('livewire.admin.report.report-receive-goods',compact('branch','receivetransaction'))->layout('layouts.base');
